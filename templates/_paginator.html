@@ -1,0 +1,63 @@
+<div class="me-md-auto text-md-left text-center mb-2 mb-md-0">
+{% if is_paginated %}
+    <form method="GET">
+        <select name="paginate_by">
+            <option value="10">10</option>
+            <option value="30">30</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+        </select>
+        <input class="btn btn-outline-primary" type="submit" value="Paginate">
+    </form>
+</div>
+<div class="me-md-auto text-md-left text-center mb-2 mb-md-0">
+    <ul class="pagination justify-content-center">
+
+        <li class="page-item">
+            <a class="page-link" href="?paginate_by={{ page_obj.paginator.per_page }}&?page=1">First</a>
+        </li>
+
+        {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link"
+                   href="?paginate_by={{ page_obj.paginator.per_page }}&page={{ page_obj.previous_page_number }}">Previous</a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+                <a class="page-link">Previous</a>
+            </li>
+        {% endif %}
+
+        {% for page_number in page_obj.paginator.page_range %}
+            {% if page_obj.number == page_number %}
+                <li class="page-item active">
+                    <a class="page-link"
+                       href="?paginate_by={{ page_obj.paginator.per_page }}&page={{ page_number }}">{{ page_number }}</a>
+                </li>
+            {% elif page_number > page_obj.number|add:"-3" and page_number < page_obj.number|add:"3" %}
+                <li class="page-item">
+                    <a class="page-link"
+                       href="?paginate_by={{ page_obj.paginator.per_page }}&page={{ page_number }}">{{ page_number }}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link"
+                   href="?paginate_by={{ page_obj.paginator.per_page }}&page={{ page_obj.next_page_number }}">Next</a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+                <a class="page-link">Next</a>
+            </li>
+        {% endif %}
+
+        <li class="page-item">
+            <a class="page-link"
+               href="?paginate_by={{ page_obj.paginator.per_page }}&page={{ page_obj.paginator.num_pages }}">Last</a>
+        </li>
+
+    </ul>
+{% endif %}
+</div>

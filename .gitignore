@@ -1,0 +1,22 @@
+# virtual environment
+/venv/
+/env/
+.venv
+.env
+
+# python cache
+__pycache__
+
+# idea stuff
+/.vscode/
+/.idea/
+
+# local databases
+*.sqlite3
+*.sqlite
+*.db
+
+# temporary files storage
+/temp/
+/tmp/
+

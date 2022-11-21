@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}SignIn Page{% endblock %}
+{% block content %}
+    <section class="vh-100" style="background-color: #eee;">
+        <div class="container py-5 h-50">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col col-xl-3">
+                    <div class="card" style="border-radius: 1rem;">
+                        <div class="row g-0">
+
+                            <div class="col-md-6 col-lg-7 d-flex align-items-center">
+                                <div class="card-body p-4 p-lg-5 text-black">
+
+                                    <form method="post">
+                                        {% csrf_token %}
+                                        <div class="d-flex align-items-center mb-3 pb-1">
+                                            <i class="fas fa-cubes fa-2x me-3" style="color: #ff6219;"></i>
+                                            <span class="h2 fw-bold mb-0">LInventory</span>
+                                        </div>
+                                        {% if message %}
+                                            <div class="alert alert-danger" role="alert">
+                                                {{ message }}
+                                            </div>
+                                        {% endif %}
+                                        <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Inventory Management System</h5>
+
+                                            {{ form|crispy }}
+                                            <button type="submit">SignIn</button>
+
+                                        <a class="small text-muted" href="#!">Forgot password?</a>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

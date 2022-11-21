@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Electronic Shop{% endblock %}
+{% block content %}
+    <div style="margin-left: 20px;">
+    <h2>Catalog:</h2>
+    <ul class="border">
+        {% for item in catalog %}
+            <li><a href="product/{{item.slug}}">{{ item.product }}</a></li>
+        {% endfor %}
+    </ul>
+    </div>
+{% endblock content %}

@@ -1,0 +1,754 @@
+{% extends "base.html" %}
+{% block title %}All devices{% endblock %}
+{% block content %}
+    <!-- BEGIN #content -->
+    <section class="vh-100" style="background-color: #eee;">
+        <div class="container py-3 h-100">
+            <div class="row content-center">
+                <div class="d-flex align-items-center mb-3">
+                    <div>
+                        <h1 class="page-header mb-0">All devices</h1>
+                    </div>
+
+                    <div class="ms-auto">
+                        <a href="{% url "inventory_create" %}" class="btn btn-outline-primary"><i
+                                class="fa fa-plus-circle fa-fw me-1"></i> Create Inventory</a>
+                    </div>
+                </div>
+
+                <div class="mb-md-4 mb-3 d-md-flex">
+                    <div class="mt-md-0 mt-2"><a href="#" class="text-dark text-opacity-75 text-decoration-none"><i
+                            class="fa fa-download fa-fw me-1 text-dark"></i> Export</a></div>
+                </div>
+                <div class="card">
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item"><a href="#allTab" class="nav-link active px-2" data-bs-toggle="tab">All</a>
+                        </li>
+                        <li class="nav-item"><a href="#Free" class="nav-link px-2" data-bs-toggle="tab">Free</a>
+                        </li>
+                        <li class="nav-item"><a href="#Used" class="nav-link px-2" data-bs-toggle="tab">Used</a></li>
+                        <li class="nav-item"><a href="#Broken" class="nav-link px-2" data-bs-toggle="tab">Broken</a>
+                        </li>
+                        <li class="nav-item"><a href="#Stored" class="nav-link px-2" data-bs-toggle="tab">Stored</a>
+                        </li>
+                        <li class="nav-item"><a href="#Sold" class="nav-link px-2" data-bs-toggle="tab">Sold</a></li>
+                        <li class="nav-item"><a href="#Decommis" class="nav-link px-2" data-bs-toggle="tab">Decommis</a>
+                        </li>
+                    </ul>
+
+                    <!-- ALL USERS START -->
+                    <div class="tab-content p-4">
+                        <!-- BEGIN input-group -->
+                        <div class="input-group mb-4">
+                            <div class="flex-fill position-relative">
+                                <div class="input-group">
+
+                                    <input type="text" id="searchInput" class="form-control" placeholder="Search..."
+                                           aria-label="Search" aria-describedby="basic-addon1">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END input-group -->
+                        <div class="tab-pane fade show active" id="allTab">
+
+
+                            <!-- BEGIN table -->
+                            <div class="table-responsive">
+                                <table class="table table-hover text-nowrap" id="dataTableM">
+                                    <thead>
+                                    <tr>
+                                        <th class="border-top-0 pt-0 pb-2">Actions</th>
+                                        <th class="border-top-0 pt-0 pb-2">ID</th>
+                                        <th class="border-top-0 pt-0 pb-2">Status</th>
+                                        <th class="border-top-0 pt-0 pb-2">Username</th>
+                                        <th class="border-top-0 pt-0 pb-2">Type</th>
+                                        <th class="border-top-0 pt-0 pb-2">Factory</th>
+                                        <th class="border-top-0 pt-0 pb-2">Model</th>
+                                        <th class="border-top-0 pt-0 pb-2">CPU</th>
+                                        <th class="border-top-0 pt-0 pb-2">RAM</th>
+                                        <th class="border-top-0 pt-0 pb-2">SSD</th>
+                                        <th class="border-top-0 pt-0 pb-2">Serial</th>
+                                    </tr>
+                                    </thead>
+
+                                    <tbody id="dataTable">
+                                    {% for instance in inventory %}
+                                        <tr>
+                                            <td class="align-middle">
+                                                <!-- view inventory -->
+                                                <a href="{% url 'inventory_details' pk=instance.pk %}"
+                                                   class="btn btn-warning btn-sm" title="Device info"><i
+                                                        class="fa fa-eye" aria-hidden="true"></i></a>
+                                                <!-- Delete inventory -->
+                                                <form action="{% url "deactivate_user" pk=instance.pk %}"
+                                                      method="post" style="display: inline;" onsubmit="window.mytest()">
+                                                    {% csrf_token %}
+                                                    <button type="submit" class="btn btn-danger btn-sm"
+                                                            title="Deactivate User">
+                                                        <i
+                                                                class="fa fa-trash" aria-hidden="true"></i>
+                                                    </button>
+                                                </form>
+                                                <script type="text/javascript">window.mytest = function () {
+                                                    var isValid = confirm('Are you sure you want to Deactivate {{ instance.username }}?');
+                                                    if (!isValid) {
+                                                        event.preventDefault();
+                                                    }
+                                                }</script>
+                                            </td>
+                                            <td class="align-middle"><a
+                                                    href="{% url "inventory_details" pk=instance.pk %}">{{ forloop.counter }}</a>
+                                            </td>
+
+                                            {% if instance.status == 'Free' %}
+                                                <td class="py-1 align-middle"><span
+                                                        class="badge bg-success align-items-center"> Free</span></td>
+                                            {% elif instance.status == 'Used' %}
+                                                <td class="py-1 align-middle"><span
+                                                        class="badge bg-primary align-items-center"> Used</span></td>
+                                            {% elif instance.status == 'Broken' %}
+                                                <td class="py-1 align-middle"><span
+                                                        class="badge bg-danger align-items-center"> Broken</span></td>
+                                            {% elif instance.status == 'Stored' %}
+                                                <td class="py-1 align-middle"><span
+                                                        class="badge bg-warning align-items-center"> Stored</span></td>
+                                            {% elif instance.status == 'Sold' %}
+                                                <td class="py-1 align-middle"><span
+                                                        class="badge bg-secondary align-items-center"> Sold</span></td>
+                                            {% elif instance.status == 'Decommis' %}
+                                                <td class="py-1 align-middle"><span
+                                                        class="badge bg-dark align-items-center"> Decommis</span>
+                                                </td>
+                                            {% endif %}
+                                            <td class="align-middle">{{ instance.username }}</td>
+                                            <td class="align-middle">{{ instance.type_name }}</td>
+                                            <td class="align-middle">{{ instance.factory_name }}</td>
+                                            <td class="align-middle">{{ instance.model_name }}</td>
+                                            <td class="align-middle">{{ instance.cpu_capacity }}</td>
+                                            <td class="align-middle">{{ instance.ram_capacity }}</td>
+                                            <td class="align-middle">{{ instance.ssd_capacity }}</td>
+                                            <td class="align-middle">{{ instance.serial_number }}</td>
+                                        </tr>
+                                    {% endfor %}
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- END table -->
+
+                            <div class="d-md-flex align-items-center">
+                                {% include "_paginator.html" %}
+                            </div>
+
+                        </div>
+
+                        <!-- ALL USERS END -->
+
+
+                        <!-- FREE COMPS START -->
+                        <div class="tab-pane fade show" id="Free">
+                            <!-- BEGIN table -->
+                            <div class="table-responsive">
+                                <table class="table table-hover text-nowrap">
+                                    <thead>
+                                    <tr>
+                                        <th class="border-top-0 pt-0 pb-2">Actions</th>
+                                        <th class="border-top-0 pt-0 pb-2">ID</th>
+                                        <th class="border-top-0 pt-0 pb-2">Status</th>
+                                        <th class="border-top-0 pt-0 pb-2">Username</th>
+                                        <th class="border-top-0 pt-0 pb-2">Type</th>
+                                        <th class="border-top-0 pt-0 pb-2">Factory</th>
+                                        <th class="border-top-0 pt-0 pb-2">Model</th>
+                                        <th class="border-top-0 pt-0 pb-2">CPU</th>
+                                        <th class="border-top-0 pt-0 pb-2">RAM</th>
+                                        <th class="border-top-0 pt-0 pb-2">SSD</th>
+                                        <th class="border-top-0 pt-0 pb-2">Serial</th>
+                                    </tr>
+                                    </thead>
+                                    {% for instance in inventory %}
+                                        {% if instance.status == 'Free' %}
+                                            <tbody id="dataTable">
+                                            <tr>
+                                                <td class="align-middle">
+                                                    <!-- view inventory -->
+                                                    <a href="{% url 'inventory_details' pk=instance.pk %}"
+                                                       class="btn btn-warning btn-sm" title="Device info"><i
+                                                            class="fa fa-eye" aria-hidden="true"></i></a>
+                                                    <!-- Delete inventory -->
+                                                    <form action="{% url "deactivate_user" pk=instance.pk %}"
+                                                          method="post" style="display: inline;"
+                                                          onsubmit="window.mytest()">
+                                                        {% csrf_token %}
+                                                        <button type="submit" class="btn btn-danger btn-sm"
+                                                                title="Deactivate User">
+                                                            <i
+                                                                    class="fa fa-trash" aria-hidden="true"></i>
+                                                        </button>
+                                                    </form>
+                                                    <script type="text/javascript">window.mytest = function () {
+                                                        var isValid = confirm('Are you sure you want to Deactivate {{ instance.username }}?');
+                                                        if (!isValid) {
+                                                            event.preventDefault();
+                                                        }
+                                                    }</script>
+                                                </td>
+                                                <td class="align-middle"><a
+                                                        href="{% url "inventory_details" pk=instance.pk %}">{{ forloop.counter }}</a>
+                                                </td>
+
+                                                {% if instance.status == 'Free' %}
+                                                    <td class="py-1 align-middle"><span
+                                                            class="badge bg-success align-items-center"> Free</span>
+                                                    </td>
+                                                {% elif instance.status == 'Used' %}
+                                                    <td class="py-1 align-middle"><span
+                                                            class="badge bg-primary align-items-center"> Used</span>
+                                                    </td>
+                                                {% elif instance.status == 'Broken' %}
+                                                    <td class="py-1 align-middle"><span
+                                                            class="badge bg-danger align-items-center"> Broken</span>
+                                                    </td>
+                                                {% elif instance.status == 'Stored' %}
+                                                    <td class="py-1 align-middle"><span
+                                                            class="badge bg-warning align-items-center"> Stored</span>
+                                                    </td>
+                                                {% elif instance.status == 'Sold' %}
+                                                    <td class="py-1 align-middle"><span
+                                                            class="badge bg-secondary align-items-center"> Sold</span>
+                                                    </td>
+                                                {% elif instance.status == 'Decommis' %}
+                                                    <td class="py-1 align-middle"><span
+                                                            class="badge bg-dark align-items-center"> Decommis</span>
+                                                    </td>
+                                                {% endif %}
+
+                                                <td class="align-middle">{{ instance.username }}</td>
+                                                <td class="align-middle">{{ instance.type_name }}</td>
+                                                <td class="align-middle">{{ instance.factory_name }}</td>
+                                                <td class="align-middle">{{ instance.model_name }}</td>
+                                                <td class="align-middle">{{ instance.cpu_capacity }}</td>
+                                                <td class="align-middle">{{ instance.ram_capacity }}</td>
+                                                <td class="align-middle">{{ instance.ssd_capacity }}</td>
+                                                <td class="align-middle">{{ instance.serial_number }}</td>
+                                            </tr>
+                                        {% endif %}
+                                    {% endfor %}
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- END table -->
+
+                            <div class="d-md-flex align-items-center">
+                                {% include "_paginator.html" %}
+                            </div>
+                        </div>
+                        <!-- FREE COMPS END -->
+
+                        <!-- USED COMPS START -->
+                        <div class="tab-pane fade show" id="Used">
+                            <!-- BEGIN table -->
+                            <div class="table-responsive">
+                                <table class="table table-hover text-nowrap">
+                                    <thead>
+                                    <tr>
+                                        <th class="border-top-0 pt-0 pb-2">Actions</th>
+                                        <th class="border-top-0 pt-0 pb-2">ID</th>
+                                        <th class="border-top-0 pt-0 pb-2">Status</th>
+                                        <th class="border-top-0 pt-0 pb-2">Username</th>
+                                        <th class="border-top-0 pt-0 pb-2">Type</th>
+                                        <th class="border-top-0 pt-0 pb-2">Factory</th>
+                                        <th class="border-top-0 pt-0 pb-2">Model</th>
+                                        <th class="border-top-0 pt-0 pb-2">CPU</th>
+                                        <th class="border-top-0 pt-0 pb-2">RAM</th>
+                                        <th class="border-top-0 pt-0 pb-2">SSD</th>
+                                        <th class="border-top-0 pt-0 pb-2">Serial</th>
+                                    </tr>
+                                    </thead>
+                                    {% for instance in inventory %}
+                                        {% if instance.status == 'Used' %}
+                                            <tbody id="dataTable">
+                                            <tr>
+                                                <td class="align-middle">
+                                                    <!-- view inventory -->
+                                                    <a href="{% url 'inventory_details' pk=instance.pk %}"
+                                                       class="btn btn-warning btn-sm" title="Device info"><i
+                                                            class="fa fa-eye" aria-hidden="true"></i></a>
+                                                    <!-- Delete inventory -->
+                                                    <form action="{% url "deactivate_user" pk=instance.pk %}"
+                                                          method="post" style="display: inline;"
+                                                          onsubmit="window.mytest()">
+                                                        {% csrf_token %}
+                                                        <button type="submit" class="btn btn-danger btn-sm"
+                                                                title="Deactivate User">
+                                                            <i
+                                                                    class="fa fa-trash" aria-hidden="true"></i>
+                                                        </button>
+                                                    </form>
+                                                    <script type="text/javascript">window.mytest = function () {
+                                                        var isValid = confirm('Are you sure you want to Deactivate {{ instance.username }}?');
+                                                        if (!isValid) {
+                                                            event.preventDefault();
+                                                        }
+                                                    }</script>
+                                                </td>
+                                                <td class="align-middle"><a
+                                                        href="{% url "inventory_details" pk=instance.pk %}">{{ forloop.counter }}</a>
+                                                </td>
+
+                                                {% if instance.status == 'Free' %}
+                                                    <td class="py-1 align-middle"><span
+                                                            class="badge bg-success align-items-center"> Free</span>
+                                                    </td>
+                                                {% elif instance.status == 'Used' %}
+                                                    <td class="py-1 align-middle"><span
+                                                            class="badge bg-primary align-items-center"> Used</span>
+                                                    </td>
+                                                {% elif instance.status == 'Broken' %}
+                                                    <td class="py-1 align-middle"><span
+                                                            class="badge bg-danger align-items-center"> Broken</span>
+                                                    </td>
+                                                {% elif instance.status == 'Stored' %}
+                                                    <td class="py-1 align-middle"><span
+                                                            class="badge bg-warning align-items-center"> Stored</span>
+                                                    </td>
+                                                {% elif instance.status == 'Sold' %}
+                                                    <td class="py-1 align-middle"><span
+                                                            class="badge bg-secondary align-items-center"> Sold</span>
+                                                    </td>
+                                                {% elif instance.status == 'Decommis' %}
+                                                    <td class="py-1 align-middle"><span
+                                                            class="badge bg-dark align-items-center"> Decommis</span>
+                                                    </td>
+                                                {% endif %}
+
+                                                <td class="align-middle">{{ instance.username }}</td>
+                                                <td class="align-middle">{{ instance.type_name }}</td>
+                                                <td class="align-middle">{{ instance.factory_name }}</td>
+                                                <td class="align-middle">{{ instance.model_name }}</td>
+                                                <td class="align-middle">{{ instance.cpu_capacity }}</td>
+                                                <td class="align-middle">{{ instance.ram_capacity }}</td>
+                                                <td class="align-middle">{{ instance.ssd_capacity }}</td>
+                                                <td class="align-middle">{{ instance.serial_number }}</td>
+                                            </tr>
+                                        {% endif %}
+                                    {% endfor %}
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- END table -->
+
+                            <div class="d-md-flex align-items-center">
+                                {% include "_paginator.html" %}
+                            </div>
+                        </div>
+                        <!-- USED COMPS END -->
+
+                        <!-- BROKEN COMPS START -->
+                        <div class="tab-pane fade show" id="Broken">
+                            <!-- BEGIN table -->
+                            <div class="table-responsive">
+                                <table class="table table-hover text-nowrap">
+                                    <thead>
+                                    <tr>
+                                        <th class="border-top-0 pt-0 pb-2">Actions</th>
+                                        <th class="border-top-0 pt-0 pb-2">ID</th>
+                                        <th class="border-top-0 pt-0 pb-2">Status</th>
+                                        <th class="border-top-0 pt-0 pb-2">Username</th>
+                                        <th class="border-top-0 pt-0 pb-2">Type</th>
+                                        <th class="border-top-0 pt-0 pb-2">Factory</th>
+                                        <th class="border-top-0 pt-0 pb-2">Model</th>
+                                        <th class="border-top-0 pt-0 pb-2">CPU</th>
+                                        <th class="border-top-0 pt-0 pb-2">RAM</th>
+                                        <th class="border-top-0 pt-0 pb-2">SSD</th>
+                                        <th class="border-top-0 pt-0 pb-2">Serial</th>
+                                    </tr>
+                                    </thead>
+                                    {% for instance in inventory %}
+                                        {% if instance.status == 'Broken' %}
+                                            <tbody id="dataTable">
+                                            <tr>
+                                                <td class="align-middle">
+                                                    <!-- view inventory -->
+                                                    <a href="{% url 'inventory_details' pk=instance.pk %}"
+                                                       class="btn btn-warning btn-sm" title="Device info"><i
+                                                            class="fa fa-eye" aria-hidden="true"></i></a>
+                                                    <!-- Delete inventory -->
+                                                    <form action="{% url "deactivate_user" pk=instance.pk %}"
+                                                          method="post" style="display: inline;"
+                                                          onsubmit="window.mytest()">
+                                                        {% csrf_token %}
+                                                        <button type="submit" class="btn btn-danger btn-sm"
+                                                                title="Deactivate User">
+                                                            <i
+                                                                    class="fa fa-trash" aria-hidden="true"></i>
+                                                        </button>
+                                                    </form>
+                                                    <script type="text/javascript">window.mytest = function () {
+                                                        var isValid = confirm('Are you sure you want to Deactivate {{ instance.username }}?');
+                                                        if (!isValid) {
+                                                            event.preventDefault();
+                                                        }
+                                                    }</script>
+                                                </td>
+                                                <td class="align-middle"><a
+                                                        href="{% url "inventory_details" pk=instance.pk %}">{{ forloop.counter }}</a>
+                                                </td>
+
+                                                {% if instance.status == 'Free' %}
+                                                    <td class="py-1 align-middle"><span
+                                                            class="badge bg-success align-items-center"> Free</span>
+                                                    </td>
+                                                {% elif instance.status == 'Used' %}
+                                                    <td class="py-1 align-middle"><span
+                                                            class="badge bg-primary align-items-center"> Used</span>
+                                                    </td>
+                                                {% elif instance.status == 'Broken' %}
+                                                    <td class="py-1 align-middle"><span
+                                                            class="badge bg-danger align-items-center"> Broken</span>
+                                                    </td>
+                                                {% elif instance.status == 'Stored' %}
+                                                    <td class="py-1 align-middle"><span
+                                                            class="badge bg-warning align-items-center"> Stored</span>
+                                                    </td>
+                                                {% elif instance.status == 'Sold' %}
+                                                    <td class="py-1 align-middle"><span
+                                                            class="badge bg-secondary align-items-center"> Sold</span>
+                                                    </td>
+                                                {% elif instance.status == 'Decommis' %}
+                                                    <td class="py-1 align-middle"><span
+                                                            class="badge bg-dark align-items-center"> Decommis</span>
+                                                    </td>
+                                                {% endif %}
+
+                                                <td class="align-middle">{{ instance.username }}</td>
+                                                <td class="align-middle">{{ instance.type_name }}</td>
+                                                <td class="align-middle">{{ instance.factory_name }}</td>
+                                                <td class="align-middle">{{ instance.model_name }}</td>
+                                                <td class="align-middle">{{ instance.cpu_capacity }}</td>
+                                                <td class="align-middle">{{ instance.ram_capacity }}</td>
+                                                <td class="align-middle">{{ instance.ssd_capacity }}</td>
+                                                <td class="align-middle">{{ instance.serial_number }}</td>
+                                            </tr>
+                                        {% endif %}
+                                    {% endfor %}
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- END table -->
+
+                            <div class="d-md-flex align-items-center">
+                                {% include "_paginator.html" %}
+                            </div>
+                        </div>
+                        <!-- BROKEN COMPS END -->
+
+                        <!-- STORED COMPS START -->
+                        <div class="tab-pane fade show" id="Stored">
+                            <!-- BEGIN table -->
+                            <div class="table-responsive">
+                                <table class="table table-hover text-nowrap">
+                                    <thead>
+                                    <tr>
+                                        <th class="border-top-0 pt-0 pb-2">Actions</th>
+                                        <th class="border-top-0 pt-0 pb-2">ID</th>
+                                        <th class="border-top-0 pt-0 pb-2">Status</th>
+                                        <th class="border-top-0 pt-0 pb-2">Username</th>
+                                        <th class="border-top-0 pt-0 pb-2">Type</th>
+                                        <th class="border-top-0 pt-0 pb-2">Factory</th>
+                                        <th class="border-top-0 pt-0 pb-2">Model</th>
+                                        <th class="border-top-0 pt-0 pb-2">CPU</th>
+                                        <th class="border-top-0 pt-0 pb-2">RAM</th>
+                                        <th class="border-top-0 pt-0 pb-2">SSD</th>
+                                        <th class="border-top-0 pt-0 pb-2">Serial</th>
+                                    </tr>
+                                    </thead>
+                                    {% for instance in inventory %}
+                                        {% if instance.status == 'Stored' %}
+                                            <tbody id="dataTable">
+                                            <tr>
+                                                <td class="align-middle">
+                                                    <!-- view inventory -->
+                                                    <a href="{% url 'inventory_details' pk=instance.pk %}"
+                                                       class="btn btn-warning btn-sm" title="Device info"><i
+                                                            class="fa fa-eye" aria-hidden="true"></i></a>
+                                                    <!-- Delete inventory -->
+                                                    <form action="{% url "deactivate_user" pk=instance.pk %}"
+                                                          method="post" style="display: inline;"
+                                                          onsubmit="window.mytest()">
+                                                        {% csrf_token %}
+                                                        <button type="submit" class="btn btn-danger btn-sm"
+                                                                title="Deactivate User">
+                                                            <i
+                                                                    class="fa fa-trash" aria-hidden="true"></i>
+                                                        </button>
+                                                    </form>
+                                                    <script type="text/javascript">window.mytest = function () {
+                                                        var isValid = confirm('Are you sure you want to Deactivate {{ instance.username }}?');
+                                                        if (!isValid) {
+                                                            event.preventDefault();
+                                                        }
+                                                    }</script>
+                                                </td>
+                                                <td class="align-middle"><a
+                                                        href="{% url "inventory_details" pk=instance.pk %}">{{ forloop.counter }}</a>
+                                                </td>
+
+                                                {% if instance.status == 'Free' %}
+                                                    <td class="py-1 align-middle"><span
+                                                            class="badge bg-success align-items-center"> Free</span>
+                                                    </td>
+                                                {% elif instance.status == 'Used' %}
+                                                    <td class="py-1 align-middle"><span
+                                                            class="badge bg-primary align-items-center"> Used</span>
+                                                    </td>
+                                                {% elif instance.status == 'Broken' %}
+                                                    <td class="py-1 align-middle"><span
+                                                            class="badge bg-danger align-items-center"> Broken</span>
+                                                    </td>
+                                                {% elif instance.status == 'Stored' %}
+                                                    <td class="py-1 align-middle"><span
+                                                            class="badge bg-warning align-items-center"> Stored</span>
+                                                    </td>
+                                                {% elif instance.status == 'Sold' %}
+                                                    <td class="py-1 align-middle"><span
+                                                            class="badge bg-secondary align-items-center"> Sold</span>
+                                                    </td>
+                                                {% elif instance.status == 'Decommis' %}
+                                                    <td class="py-1 align-middle"><span
+                                                            class="badge bg-dark align-items-center"> Decommis</span>
+                                                    </td>
+                                                {% endif %}
+
+                                                <td class="align-middle">{{ instance.username }}</td>
+                                                <td class="align-middle">{{ instance.type_name }}</td>
+                                                <td class="align-middle">{{ instance.factory_name }}</td>
+                                                <td class="align-middle">{{ instance.model_name }}</td>
+                                                <td class="align-middle">{{ instance.cpu_capacity }}</td>
+                                                <td class="align-middle">{{ instance.ram_capacity }}</td>
+                                                <td class="align-middle">{{ instance.ssd_capacity }}</td>
+                                                <td class="align-middle">{{ instance.serial_number }}</td>
+                                            </tr>
+                                        {% endif %}
+                                    {% endfor %}
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- END table -->
+
+                            <div class="d-md-flex align-items-center">
+                                {% include "_paginator.html" %}
+                            </div>
+                        </div>
+                        <!-- STORED COMPS END -->
+
+                        <!-- SOLD COMPS START -->
+                        <div class="tab-pane fade show" id="Sold">
+                            <!-- BEGIN table -->
+                            <div class="table-responsive">
+                                <table class="table table-hover text-nowrap">
+                                    <thead>
+                                    <tr>
+                                        <th class="border-top-0 pt-0 pb-2">Actions</th>
+                                        <th class="border-top-0 pt-0 pb-2">ID</th>
+                                        <th class="border-top-0 pt-0 pb-2">Status</th>
+                                        <th class="border-top-0 pt-0 pb-2">Username</th>
+                                        <th class="border-top-0 pt-0 pb-2">Type</th>
+                                        <th class="border-top-0 pt-0 pb-2">Factory</th>
+                                        <th class="border-top-0 pt-0 pb-2">Model</th>
+                                        <th class="border-top-0 pt-0 pb-2">CPU</th>
+                                        <th class="border-top-0 pt-0 pb-2">RAM</th>
+                                        <th class="border-top-0 pt-0 pb-2">SSD</th>
+                                        <th class="border-top-0 pt-0 pb-2">Serial</th>
+                                    </tr>
+                                    </thead>
+                                    {% for instance in inventory %}
+                                        {% if instance.status == 'Sold' %}
+                                            <tbody id="dataTable">
+                                            <tr>
+                                                <td class="align-middle">
+                                                    <!-- view inventory -->
+                                                    <a href="{% url 'inventory_details' pk=instance.pk %}"
+                                                       class="btn btn-warning btn-sm" title="Device info"><i
+                                                            class="fa fa-eye" aria-hidden="true"></i></a>
+                                                    <!-- Delete inventory -->
+                                                    <form action="{% url "deactivate_user" pk=instance.pk %}"
+                                                          method="post" style="display: inline;"
+                                                          onsubmit="window.mytest()">
+                                                        {% csrf_token %}
+                                                        <button type="submit" class="btn btn-danger btn-sm"
+                                                                title="Deactivate User">
+                                                            <i
+                                                                    class="fa fa-trash" aria-hidden="true"></i>
+                                                        </button>
+                                                    </form>
+                                                    <script type="text/javascript">window.mytest = function () {
+                                                        var isValid = confirm('Are you sure you want to Deactivate {{ instance.username }}?');
+                                                        if (!isValid) {
+                                                            event.preventDefault();
+                                                        }
+                                                    }</script>
+                                                </td>
+                                                <td class="align-middle"><a
+                                                        href="{% url "inventory_details" pk=instance.pk %}">{{ forloop.counter }}</a>
+                                                </td>
+
+                                                {% if instance.status == 'Free' %}
+                                                    <td class="py-1 align-middle"><span
+                                                            class="badge bg-success align-items-center"> Free</span>
+                                                    </td>
+                                                {% elif instance.status == 'Used' %}
+                                                    <td class="py-1 align-middle"><span
+                                                            class="badge bg-primary align-items-center"> Used</span>
+                                                    </td>
+                                                {% elif instance.status == 'Broken' %}
+                                                    <td class="py-1 align-middle"><span
+                                                            class="badge bg-danger align-items-center"> Broken</span>
+                                                    </td>
+                                                {% elif instance.status == 'Stored' %}
+                                                    <td class="py-1 align-middle"><span
+                                                            class="badge bg-warning align-items-center"> Stored</span>
+                                                    </td>
+                                                {% elif instance.status == 'Sold' %}
+                                                    <td class="py-1 align-middle"><span
+                                                            class="badge bg-secondary align-items-center"> Sold</span>
+                                                    </td>
+                                                {% elif instance.status == 'Decommis' %}
+                                                    <td class="py-1 align-middle"><span
+                                                            class="badge bg-dark align-items-center"> Decommis</span>
+                                                    </td>
+                                                {% endif %}
+
+                                                <td class="align-middle">{{ instance.username }}</td>
+                                                <td class="align-middle">{{ instance.type_name }}</td>
+                                                <td class="align-middle">{{ instance.factory_name }}</td>
+                                                <td class="align-middle">{{ instance.model_name }}</td>
+                                                <td class="align-middle">{{ instance.cpu_capacity }}</td>
+                                                <td class="align-middle">{{ instance.ram_capacity }}</td>
+                                                <td class="align-middle">{{ instance.ssd_capacity }}</td>
+                                                <td class="align-middle">{{ instance.serial_number }}</td>
+                                            </tr>
+                                        {% endif %}
+                                    {% endfor %}
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- END table -->
+
+                            <div class="d-md-flex align-items-center">
+                                {% include "_paginator.html" %}
+                            </div>
+                        </div>
+                        <!-- SOLD COMPS END -->
+
+                        <!-- DECOMMIS COMPS START -->
+                        <div class="tab-pane fade show" id="Decommis">
+                            <!-- BEGIN table -->
+                            <div class="table-responsive">
+                                <table class="table table-hover text-nowrap">
+                                    <thead>
+                                    <tr>
+                                        <th class="border-top-0 pt-0 pb-2">Actions</th>
+                                        <th class="border-top-0 pt-0 pb-2">ID</th>
+                                        <th class="border-top-0 pt-0 pb-2">Status</th>
+                                        <th class="border-top-0 pt-0 pb-2">Username</th>
+                                        <th class="border-top-0 pt-0 pb-2">Type</th>
+                                        <th class="border-top-0 pt-0 pb-2">Factory</th>
+                                        <th class="border-top-0 pt-0 pb-2">Model</th>
+                                        <th class="border-top-0 pt-0 pb-2">CPU</th>
+                                        <th class="border-top-0 pt-0 pb-2">RAM</th>
+                                        <th class="border-top-0 pt-0 pb-2">SSD</th>
+                                        <th class="border-top-0 pt-0 pb-2">Serial</th>
+                                    </tr>
+                                    </thead>
+                                    {% for instance in inventory %}
+                                        {% if instance.status == 'Decommis' %}
+                                            <tbody id="dataTable">
+                                            <tr>
+                                                <td class="align-middle">
+                                                    <!-- view inventory -->
+                                                    <a href="{% url 'inventory_details' pk=instance.pk %}"
+                                                       class="btn btn-warning btn-sm" title="Device info"><i
+                                                            class="fa fa-eye" aria-hidden="true"></i></a>
+                                                    <!-- Delete inventory -->
+                                                    <form action="{% url "deactivate_user" pk=instance.pk %}"
+                                                          method="post" style="display: inline;"
+                                                          onsubmit="window.mytest()">
+                                                        {% csrf_token %}
+                                                        <button type="submit" class="btn btn-danger btn-sm"
+                                                                title="Deactivate User">
+                                                            <i
+                                                                    class="fa fa-trash" aria-hidden="true"></i>
+                                                        </button>
+                                                    </form>
+                                                    <script type="text/javascript">window.mytest = function () {
+                                                        var isValid = confirm('Are you sure you want to Deactivate {{ instance.username }}?');
+                                                        if (!isValid) {
+                                                            event.preventDefault();
+                                                        }
+                                                    }</script>
+                                                </td>
+                                                <td class="align-middle"><a
+                                                        href="{% url "inventory_details" pk=instance.pk %}">{{ forloop.counter }}</a>
+                                                </td>
+
+                                                {% if instance.status == 'Free' %}
+                                                    <td class="py-1 align-middle"><span
+                                                            class="badge bg-success align-items-center"> Free</span>
+                                                    </td>
+                                                {% elif instance.status == 'Used' %}
+                                                    <td class="py-1 align-middle"><span
+                                                            class="badge bg-primary align-items-center"> Used</span>
+                                                    </td>
+                                                {% elif instance.status == 'Broken' %}
+                                                    <td class="py-1 align-middle"><span
+                                                            class="badge bg-danger align-items-center"> Broken</span>
+                                                    </td>
+                                                {% elif instance.status == 'Stored' %}
+                                                    <td class="py-1 align-middle"><span
+                                                            class="badge bg-warning align-items-center"> Stored</span>
+                                                    </td>
+                                                {% elif instance.status == 'Sold' %}
+                                                    <td class="py-1 align-middle"><span
+                                                            class="badge bg-secondary align-items-center"> Sold</span>
+                                                    </td>
+                                                {% elif instance.status == 'Decommis' %}
+                                                    <td class="py-1 align-middle"><span
+                                                            class="badge bg-dark align-items-center"> Decommis</span>
+                                                    </td>
+                                                {% endif %}
+
+                                                <td class="align-middle">{{ instance.username }}</td>
+                                                <td class="align-middle">{{ instance.type_name }}</td>
+                                                <td class="align-middle">{{ instance.factory_name }}</td>
+                                                <td class="align-middle">{{ instance.model_name }}</td>
+                                                <td class="align-middle">{{ instance.cpu_capacity }}</td>
+                                                <td class="align-middle">{{ instance.ram_capacity }}</td>
+                                                <td class="align-middle">{{ instance.ssd_capacity }}</td>
+                                                <td class="align-middle">{{ instance.serial_number }}</td>
+                                            </tr>
+                                        {% endif %}
+                                    {% endfor %}
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- END table -->
+
+                            <div class="d-md-flex align-items-center">
+                                {% include "_paginator.html" %}
+                            </div>
+                        </div>
+                    </div>
+                    <!-- DECOMMIS COMPS END -->
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- END #content -->
+{% endblock %}
