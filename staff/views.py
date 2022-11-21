@@ -13,10 +13,12 @@ from .forms import SignUpForm, SignInForm, UserProfileEdit, UserPasswordChange
 
 @login_required()
 def user_profile(request: HttpRequest) -> HttpResponse:
+    '''User profile implementation'''
     return render(request, 'user_settings.html')
 
 
 class Users_list(LoginRequiredMixin, TemplateView):
+    '''List of users implementation'''
     template_name = 'users_list.html'
 
     def get_context_data(self, **kwargs):
@@ -24,12 +26,8 @@ class Users_list(LoginRequiredMixin, TemplateView):
         return context
 
 
-# @login_required()
-# def user_profile(request: HttpRequest) -> HttpResponse:
-#     return render(request, 'user_profileS.html')
-
-
 def signin_view(request: HttpRequest) -> HttpResponse:
+    '''Login page implementation'''
     if request.method == 'POST':
         form = SignInForm(request.POST)
         if form.is_valid():
@@ -42,6 +40,7 @@ def signin_view(request: HttpRequest) -> HttpResponse:
 
 
 def signup_view(request: HttpRequest) -> HttpResponse:
+    '''New user create implementation'''
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
@@ -54,12 +53,14 @@ def signup_view(request: HttpRequest) -> HttpResponse:
 
 @login_required()
 def signout_view(request: HttpRequest) -> HttpResponse:
+    '''logout implementation'''
     logout(request)
     return HttpResponseRedirect(reverse_lazy("signin"))
 
 
 @login_required()
 def deactivate_user_view(request: HttpRequest) -> HttpResponse:
+    '''Deactivate self user implementation'''
     request.user.is_active = False
     request.user.save()
     logout(request)
@@ -120,7 +121,7 @@ def activate_user(request: HttpRequest, pk):
 @login_required()
 @staff_member_required()
 def mnotstaff_user(request: HttpRequest, pk):
-    """Activate some user view"""
+    """Make Not Staff some user view"""
     mnstaff = get_object_or_404(CustomUserModel, pk=pk)
     mnstaff.is_staff = False
     mnstaff.save()
@@ -130,7 +131,7 @@ def mnotstaff_user(request: HttpRequest, pk):
 @login_required()
 @staff_member_required()
 def mstaff_user(request: HttpRequest, pk):
-    """Activate some user view"""
+    """Make Staff some user view"""
     mstaff = get_object_or_404(CustomUserModel, pk=pk)
     mstaff.is_staff = True
     mstaff.save()

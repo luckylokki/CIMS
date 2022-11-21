@@ -3,10 +3,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from inventory.models import InventoryModel, OSModel, FactoryModel
 from CIMS.utils import StaffProfileRequiredMixin
-from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.shortcuts import render
 
 class InventoryListView(LoginRequiredMixin, ListView):
+    '''Inventory ListView implementation'''
     model = InventoryModel
     template_name = 'invetory_all.html'
     context_object_name = 'inventory'
@@ -15,12 +14,9 @@ class InventoryListView(LoginRequiredMixin, ListView):
     def get_paginate_by(self, queryset):
         return self.request.GET.get("paginate_by", self.paginate_by)
 
-    # def get_context_data(self, **kwargs):
-    #     context = {'inventory': InventoryModel.objects.all()}
-    #     return context
-
 
 class InventoryCreateView(LoginRequiredMixin, StaffProfileRequiredMixin, CreateView):
+    '''Inventory item CreateView implementation'''
     model = InventoryModel
     template_name = 'inventory_create.html'
     fields = ['username', 'type_name', 'factory_name', 'model_name', 'op_system', 'cpu_capacity',
@@ -29,11 +25,13 @@ class InventoryCreateView(LoginRequiredMixin, StaffProfileRequiredMixin, CreateV
 
 
 class InventoryDetailsView(LoginRequiredMixin, DetailView):
+    '''Inventory item DetailView implementation'''
     model = InventoryModel
     template_name = 'inventory_details.html'
 
 
 class InvetoryUpdateView(StaffProfileRequiredMixin, UpdateView):
+    '''Inventory item UpdateView implementation'''
     model = InventoryModel
     template_name = 'inventory_update.html'
     fields = ['username', 'type_name', 'factory_name', 'model_name', 'op_system', 'cpu_capacity',
@@ -41,6 +39,7 @@ class InvetoryUpdateView(StaffProfileRequiredMixin, UpdateView):
 
 
 class OSFListView(LoginRequiredMixin, ListView):
+    '''OS and Factory ListView implementation'''
     model = OSModel
     template_name = 'systems.html'
 
@@ -52,6 +51,7 @@ class OSFListView(LoginRequiredMixin, ListView):
 
 
 class OSCreateView(LoginRequiredMixin, StaffProfileRequiredMixin, CreateView):
+    '''Operation System CreateView implementation'''
     model = OSModel
     template_name = 'os_create.html'
     fields = '__all__'
@@ -59,14 +59,17 @@ class OSCreateView(LoginRequiredMixin, StaffProfileRequiredMixin, CreateView):
 
 
 class OSDeleteView(LoginRequiredMixin,StaffProfileRequiredMixin,DeleteView):
+    '''Operation System DeleteView implementation'''
     model = OSModel
     success_url = reverse_lazy('system_list')
 class FactoryCreateView(LoginRequiredMixin, StaffProfileRequiredMixin, CreateView):
+    '''Factory CreateViee implementation'''
     model = FactoryModel
     template_name = 'factory_create.html'
     fields = '__all__'
     success_url = reverse_lazy('inventory_list')
 
 class FactoryDeleteView(LoginRequiredMixin,StaffProfileRequiredMixin,DeleteView):
+    '''Factory DeleteView implementation'''
     model = FactoryModel
     success_url = reverse_lazy('system_list')
