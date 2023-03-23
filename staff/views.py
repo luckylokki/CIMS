@@ -3,9 +3,10 @@ from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
-from django.contrib.auth import authenticate, login, logout
+from django.views.generic import TemplateView
+from django.contrib.auth import login, logout
 from staff.models import CustomUserModel
+from inventory.models import MainDomain
 from django.contrib.admin.views.decorators import staff_member_required
 
 from .forms import SignUpForm, SignInForm, UserProfileEdit, UserPasswordChange
@@ -32,7 +33,10 @@ def signin_view(request: HttpRequest) -> HttpResponse:
         form = SignInForm(request.POST)
         if form.is_valid():
             login(request, form.user)
-            return HttpResponseRedirect(reverse_lazy('inventory_list'))
+            if MainDomain.objects.count() == 0:
+                return HttpResponseRedirect(reverse_lazy('domain_create'))
+            else:
+                return HttpResponseRedirect(reverse_lazy('inventory_list'))
             # return render(request, 'user_settings.html')
     else:
         form = SignInForm()

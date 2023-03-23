@@ -1,9 +1,16 @@
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from inventory.models import InventoryModel, OSModel, FactoryModel, HistoryData
+from inventory.models import InventoryModel, OSModel, FactoryModel, HistoryData, MainDomain
 from CIMS.utils import StaffProfileRequiredMixin
 
+
+class DomainCreateView(LoginRequiredMixin, StaffProfileRequiredMixin, CreateView):
+    '''Inventory item CreateView implementation'''
+    model = MainDomain
+    template_name = 'domain_create.html'
+    fields = ['domain_name']
+    success_url = reverse_lazy('inventory_list')
 class InventoryListView(LoginRequiredMixin, ListView):
     '''Inventory ListView implementation'''
     model = InventoryModel

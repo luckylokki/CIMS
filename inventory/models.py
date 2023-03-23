@@ -7,6 +7,7 @@ import qrcode
 from django.conf import settings
 from django_currentuser.db.models import CurrentUserField
 
+
 def get_default_datetime():
     now = datetime.now().strftime("%b.%d,%Y %H:%M:%S")
     return now
@@ -27,12 +28,13 @@ class FactoryModel(models.Model):
     def __str__(self) -> str:
         return self.factory_name
 
+
 class MainDomain(models.Model):
     """Model for Factory names"""
     domain_name = models.CharField(max_length=40, blank=False)
 
     def __str__(self) -> str:
-        return self.factory_name
+        return self.domain_name
 
 class InventoryModel(models.Model):
     """Maim Model with invetory"""
@@ -64,7 +66,7 @@ class InventoryModel(models.Model):
     created_date = models.DateTimeField(auto_now_add=True, null=True)
     updated_date = models.DateTimeField(auto_now=True, null=True)
     created_by = CurrentUserField(related_name='created_by')
-    updated_by = CurrentUserField(on_update=True,related_name='updated_by')
+    updated_by = CurrentUserField(on_update=True, related_name='updated_by')
     price_buy = models.IntegerField(default=0, null=True, blank=True)
     price_today = models.IntegerField(default=0, null=True, blank=True)
     is_delete = models.BooleanField(default=False)
@@ -72,14 +74,16 @@ class InventoryModel(models.Model):
 
     def get_absolute_url(self):  # new
         return reverse('inventory_details', kwargs={'pk': self.pk})
+
     def save(self, *args, **kwargs):
         is_create = self.pk is None
         super().save(*args, **kwargs)
 
         # We got pk after save above.
         if is_create:
-            self.qrcode = str(self.pk)+'.png'
+            self.qrcode = str(self.pk) + '.png'
             super().save(update_fields=["qrcode"])
+
 
 class HistoryData(models.Model):
     """Maim Model with invetory"""
@@ -89,24 +93,27 @@ class HistoryData(models.Model):
 
     def get_absolute_url(self):  # new
         return reverse('inventory_details', kwargs={'pk': self.pk})
+
     def __str__(self):
         return '%s %s %s' % (self.pk, self.username, self.use_date)
 
+
 @receiver(post_save, sender=InventoryModel)
 def signal_handler_history(sender, instance, **kwargs):
-
     if HistoryData.objects.count() != 0:
         if instance.username != HistoryData.objects.last().username:
-            HistoryData.objects.create(username=instance.username, use_date=instance.updated_date, invent_id=instance.pk)
+            HistoryData.objects.create(username=instance.username, use_date=instance.updated_date,
+                                       invent_id=instance.pk)
     else:
         HistoryData.objects.create(username=instance.username, use_date=instance.updated_date, invent_id=instance.pk)
 
+
 @receiver(post_save, sender=InventoryModel)
 def signal_handler_qr(sender, instance, **kwargs):
-    main_adress = str("http://127.0.0.1/" + str(instance.id) + "/details")
+    main_adress = str(str(MainDomain.objects.all()[:1].get()) + 'inventory/' + str(instance.id) + "/details")
     qr = qrcode.QRCode(version=1, box_size=10, border=1)
     qr.add_data(main_adress)
     qr.make(fit=True)
     img = qr.make_image(fill="black", back_color="white")
-    print(str(settings.MEDIA_ROOT)+'/'+ str(instance.pk) + '.png')
-    img.save(str(settings.MEDIA_ROOT)+'/'+ str(instance.pk) + '.png')
+    print(str(settings.MEDIA_ROOT) + '/' + str(instance.pk) + '.png')
+    img.save(str(settings.MEDIA_ROOT) + '/' + str(instance.pk) + '.png')
