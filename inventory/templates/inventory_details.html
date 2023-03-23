@@ -115,6 +115,14 @@
                                     </div>
                                 </div>
                             </div>
+                            {% for data in history %}
+                                {% if inventorymodel.pk == data.invent_id%}
+                                    <div>{{ data.username  }}</div>
+                                {% endif %}
+                            {% endfor %}
+                            <div>
+                                <img src="/media/{{ inventorymodel.qrcode }}">
+                            </div>
                             <!-- END #general -->
 
 

@@ -1,7 +1,7 @@
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from inventory.models import InventoryModel, OSModel, FactoryModel
+from inventory.models import InventoryModel, OSModel, FactoryModel, HistoryData
 from CIMS.utils import StaffProfileRequiredMixin
 
 class InventoryListView(LoginRequiredMixin, ListView):
@@ -28,6 +28,14 @@ class InventoryDetailsView(LoginRequiredMixin, DetailView):
     '''Inventory item DetailView implementation'''
     model = InventoryModel
     template_name = 'inventory_details.html'
+    def get_context_data(self, **kwargs):
+        """
+        This has been overridden to add `history` to the template context,
+        now you can use {{ history }} within the template
+        """
+        context = super().get_context_data(**kwargs)
+        context['history'] = HistoryData.objects.all().order_by('-pk')
+        return context
 
 
 class InvetoryUpdateView(StaffProfileRequiredMixin, UpdateView):
@@ -67,7 +75,7 @@ class FactoryCreateView(LoginRequiredMixin, StaffProfileRequiredMixin, CreateVie
     model = FactoryModel
     template_name = 'factory_create.html'
     fields = '__all__'
-    success_url = reverse_lazy('inventory_list')
+    success_url = reverse_lazy('system_list')
 
 class FactoryDeleteView(LoginRequiredMixin,StaffProfileRequiredMixin,DeleteView):
     '''Factory DeleteView implementation'''
