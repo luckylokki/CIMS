@@ -69,6 +69,7 @@ class InventoryModel(models.Model):
     updated_by = CurrentUserField(on_update=True, related_name='updated_by')
     price_buy = models.IntegerField(default=0, null=True, blank=True)
     price_today = models.IntegerField(default=0, null=True, blank=True)
+    price_sell = models.IntegerField(default=0, null=True, blank=True)
     is_delete = models.BooleanField(default=False)
     comment = models.TextField(null=True, blank=True)
 
