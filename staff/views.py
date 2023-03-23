@@ -29,6 +29,8 @@ class Users_list(LoginRequiredMixin, TemplateView):
 
 def signin_view(request: HttpRequest) -> HttpResponse:
     '''Login page implementation'''
+    if request.user.is_authenticated:
+        return HttpResponseRedirect(reverse_lazy('inventory_list'))
     if request.method == 'POST':
         form = SignInForm(request.POST)
         if form.is_valid():
