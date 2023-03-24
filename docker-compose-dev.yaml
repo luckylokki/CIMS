@@ -6,6 +6,8 @@ services:
       context: .
       dockerfile: dockerfile-dev
     container_name: cims-dev
+    environment:
+      DJANGO_DEBUG: 1
     volumes:
       - .db_data:/usr/src/cims/.db
       - ./migrations_staff:/usr/src/cims/staff/migrations
