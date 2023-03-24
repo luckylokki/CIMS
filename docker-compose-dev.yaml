@@ -4,7 +4,7 @@ services:
   cims-dev:
     build:
       context: .
-      dockerfile: Dockerfile-dev
+      dockerfile: dockerfile-dev
     container_name: cims-dev
     volumes:
       - .db_data:/usr/src/cims/.db
