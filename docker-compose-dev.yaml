@@ -1,14 +1,14 @@
 version: '3.5'
 
 services:
-  cims:
+  cims-dev:
     build:
       context: .
-      dockerfile: Dockerfile
-    container_name: cims
+      dockerfile: Dockerfile-dev
+    container_name: cims-dev
     volumes:
       - .db_data:/usr/src/cims/.db
       - ./migrations_staff:/usr/src/cims/staff/migrations
       - ./migrations_inventory:/usr/src/cims/inventory/migrations
     ports:
-      - "8000:8000"
+      - "8001:8000"
