@@ -4,133 +4,292 @@
 {% block content %}
     <section class="vh-300" style="background-color: #eee;">
         <div class="container py-3 h-100">
-            <div class="row content-center">
+            <!-- END container -->
+                <div class="main-body">
 
-                <!-- BEGIN row -->
-                <div class="row justify-content-center">
-                    <!-- BEGIN col-10 -->
-                    <div class="col-xl-10">
-                        <!-- BEGIN row -->
-                        <div class="row">
-                            <!-- BEGIN col-9 -->
-                            <!-- BEGIN #general -->
-                            <div id="general" class="mb-5">
-                                <h4><i class="far fa-user fa-fw text-theme"></i> General
-                                    of {{ inventorymodel.factory_name}} {{ inventorymodel.model_name}} <a
-                                            href="{% url "inventory_update" pk=inventorymodel.pk %}"
-                                            class="btn btn-outline-primary w-100px">Edit</a></h4>
-                                <p>View and update device information.</p>
-                                <div class="card">
-                                    <div class="list-group list-group-flush">
-                                        <div class="list-group-item d-flex align-items-center">
-                                            <div class="flex-1 text-break">
-                                                <div class="fw-bold">USERNAME</div>
-                                                <div>{{ inventorymodel.username }}</div>
+                    <div class="row gutters-sm">
+                        <div class="col-md-4 mb-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex flex-column align-items-center text-center">
+                                        <img src="/media/{{ inventorymodel.qrcode }}" alt="Qr" width="150">
+                                        <div class="mt-3">
+                                            <h4>{{ inventorymodel.username }}</h4>
+                                            <p class="text-secondary mb-1">
+                                                {% if invetnorymodel.status == 'Free' %}
+                                                    <span class="text-success">Free</span>
+                                                {% elif inventorymodel.status == 'Used' %}
+                                                    <span class="text-primary">Used</span>
+                                                {% elif inventorymodel.status == 'Broken' %}
+                                                    <span class="text-danger">Broken</span>
+                                                {% elif inventorymodel.status == 'Stored' %}
+                                                    <span class="text-warning">Stored</span>
+                                                {% elif inventorymodel.status == 'Sold' %}
+                                                    <span class="text-secondary">Sold</span>
+                                                {% elif inventorymodel.status == 'Decommis' %}
+                                                    <span class="text-dark">Decommis</span>
+                                                {% endif %}
+                                                {{ inventorymodel.type_name }}
+                                            </p>
+                                            <p class="text-muted font-size-sm">{{ inventorymodel.factory_name }} {{ inventorymodel.model_name }}</p>
+                                            <a href="{% url "inventory_update" pk=inventorymodel.pk %}"
+                                               class="btn btn-info w-100px">Edit Device Data</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card mt-3">
+                                <div class="card-body">
+                                    <h5 class="d-flex align-items-center mb-3">Comments<i
+                                            class="material-icons text-info mr-2">>>information</i>
+                                    </h5>
+
+                                    <small>{{ inventorymodel.comment }}</small>
+
+                                </div>
+                            </div>
+                            <div class="card mt-3">
+                                <div class="card-body">
+                                    <ul class="list-group list-group-flush">
+                                        <h5 class="d-flex align-items-center mb-3">Device History<i
+                                                class="material-icons text-info mr-2">>>information</i>
+                                        </h5>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                            <h6 class="mb-0">
+                                                Employee
+                                            </h6>
+                                            <h6 class="mb-0">
+                                                Used From
+                                            </h6>
+                                        </li>
+                                        {% for data in history %}
+                                            {% if inventorymodel.pk == data.invent_id %}
+                                                <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                                    <span class="text-secondary">{{ data.username }}</span>
+                                                    <small><span
+                                                            class="text-secondary">{{ data.use_date }}</span></small>
+                                                </li>
+                                                <div></div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="d-flex align-items-center mb-3">General
+                                        Device<i class="material-icons text-info mr-2">>>information</i></h5>
+                                    <div class="row">
+                                        <!-- COL 1 DETAILS -->
+                                        <div class="col">
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <h6 class="mb-0">Full Name</h6>
+                                                </div>
+                                                <div class="col-sm-9 text-secondary">
+                                                    {{ inventorymodel.username }}
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <h6 class="mb-0">Model</h6>
+                                                </div>
+                                                <div class="col-sm-9 text-secondary">
+                                                    {{  inventorymodel.factory_name }} {{ inventorymodel.model_name }}
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <h6 class="mb-0">Phone</h6>
+                                                </div>
+                                                <div class="col-sm-9 text-secondary">
+                                                    (239) 816-9029
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <h6 class="mb-0">Mobile</h6>
+                                                </div>
+                                                <div class="col-sm-9 text-secondary">
+                                                    (320) 380-4539
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <h6 class="mb-0">Address</h6>
+                                                </div>
+                                                <div class="col-sm-9 text-secondary">
+                                                    Bay Area, San Francisco, CA
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <a class="btn btn-info " target="__blank"
+                                                       href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills">Edit</a>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="list-group-item d-flex align-items-center">
-                                            <div class="flex-1 text-break">
-                                                <div class="fw-bold">TYPE</div>
-                                                <div>{{ inventorymodel.type_name }}</div>
+                                        <!-- COL 2 DETAILS -->
+                                        <div class="col">
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <h6 class="mb-0">Status</h6>
+                                                </div>
+                                                <div class="col-sm-9 text-secondary">
+                                                    {% if invetnorymodel.status == 'Free' %}
+                                                        <span class="badge bg-success align-items-center">Free</span>
+                                                    {% elif inventorymodel.status == 'Used' %}
+                                                        <span class="badge bg-primary align-items-center">Used</span>
+                                                    {% elif inventorymodel.status == 'Broken' %}
+                                                        <span class="badge bg-danger align-items-center">Broken</span>
+                                                    {% elif inventorymodel.status == 'Stored' %}
+                                                        <span class="badge bg-warning align-items-center">Stored</span>
+                                                    {% elif inventorymodel.status == 'Sold' %}
+                                                        <span class="badge bg-secondary align-items-center">Sold</span>
+                                                    {% elif inventorymodel.status == 'Decommis' %}
+                                                        <span class="badge bg-dark align-items-center">Decommis</span>
+                                                    {% endif %}
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="list-group-item d-flex align-items-center">
-                                            <div class="flex-1 text-break">
-                                                <div class="fw-bold">FACTORY</div>
-                                                <div> {{ inventorymodel.factory_name }}</div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <h6 class="mb-0">Type</h6>
+                                                </div>
+                                                <div class="col-sm-9 text-secondary">
+                                                    {{ inventorymodel.type_name }}
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="list-group-item d-flex align-items-center">
-                                            <div class="flex-1 text-break">
-                                                <div class="fw-bold">MODEL</div>
-                                                <div>{{ inventorymodel.model_name }}</div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <h6 class="mb-0">Phone</h6>
+                                                </div>
+                                                <div class="col-sm-9 text-secondary">
+                                                    (239) 816-9029
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="list-group-item d-flex align-items-center">
-                                            <div class="flex-1 text-break">
-                                                <div class="fw-bold">OS</div>
-                                                <div>{{ inventorymodel.op_system }}</div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <h6 class="mb-0">Mobile</h6>
+                                                </div>
+                                                <div class="col-sm-9 text-secondary">
+                                                    (320) 380-4539
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="list-group-item d-flex align-items-center">
-                                            <div class="flex-1 text-break">
-                                                <div class="fw-bold">CPU</div>
-                                                <div>{{ inventorymodel.cpu_capacity }}</div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <h6 class="mb-0">Address</h6>
+                                                </div>
+                                                <div class="col-sm-9 text-secondary">
+                                                    Bay Area, San Francisco, CA
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="list-group-item d-flex align-items-center">
-                                            <div class="flex-1 text-break">
-                                                <div class="fw-bold">RAM</div>
-                                                <div> {{ inventorymodel.ram_capacity }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="list-group-item d-flex align-items-center">
-                                            <div class="flex-1 text-break">
-                                                <div class="fw-bold">SSD</div>
-                                                <div>{{ inventorymodel.ssd_capacity }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="list-group-item d-flex align-items-center">
-                                            <div class="flex-1 text-break">
-                                                <div class="fw-bold">SERIAL</div>
-                                                <div>{{ inventorymodel.serial_number}}</div>
-                                            </div>
-                                        </div>
-                                        <div class="list-group-item d-flex align-items-center">
-                                            <div class="flex-1 text-break">
-                                                <div class="fw-bold">STATUS</div>
-                                                <div>{{ inventorymodel.status }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="list-group-item d-flex align-items-center">
-                                            <div class="flex-1 text-break">
-                                                <div class="fw-bold">BUY DATE</div>
-                                                <div> {{ inventorymodel.created_date }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="list-group-item d-flex align-items-center">
-                                            <div class="flex-1 text-break">
-                                                <div class="fw-bold">CREATED BY</div>
-                                                <div>{{ inventorymodel.created_by }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="list-group-item d-flex align-items-center">
-                                            <div class="flex-1 text-break">
-                                                <div class="fw-bold">PRICE BUY</div>
-                                                <div>{{ inventorymodel.price_buy }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="list-group-item d-flex align-items-center">
-                                            <div class="flex-1 text-break">
-                                                <div class="fw-bold">PRICE TODAY</div>
-                                                <div>{{ inventorymodel.price_today }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="list-group-item d-flex align-items-center">
-                                            <div class="flex-1 text-break">
-                                                <div class="fw-bold">COMMENTS</div>
-                                                <div> {{ inventorymodel.comment }}</div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <a class="btn btn-info " target="__blank"
+                                                       href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills">Edit</a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <!-- END #general -->
 
+                            <div class="row gutters-sm">
+                                <div class="col-sm-6 mb-3">
+                                    <div class="card h-100">
+                                        <div class="card-body">
 
+                                            <h5 class="d-flex align-items-center mb-3">Price<i
+                                                    class="material-icons text-info mr-2">>>information</i></h5>
+                                            <div class="row">
+                                                <div class="col-sm-5">
+                                                    <h6>Purchase Price</h6>
+                                                </div>
+                                                <div class="col-sm-6 text-secondary">
+                                                    <small>{{ inventorymodel.price_buy }}</small>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-5">
+                                                    <h6>Current Price</h6>
+                                                </div>
+                                                <div class="col-sm-6 text-secondary">
+                                                    <small>{{ inventorymodel.price_today }}</small>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-5">
+                                                    <h6>Selling Price</h6>
+                                                </div>
+                                                <div class="col-sm-6 text-secondary">
+                                                    <small>{{ inventorymodel.price_sell }}</small>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6 mb-3">
+                                    <div class="card h-100">
+                                        <div class="card-body">
+                                            <h5 class="d-flex align-items-center mb-3">
+                                                Administrative<i class="material-icons text-info mr-2">>>information</i>
+                                            </h5>
+                                            <div class="row">
+                                                <div class="col-sm-5">
+                                                    <h6>Add/Buy Date</h6>
+                                                </div>
+                                                <div class="col-sm-7 text-secondary">
+                                                    <small>{{ inventorymodel.created_date }}</small>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-5">
+                                                    <h6>Update Date</h6>
+                                                </div>
+                                                <div class="col-sm-7 text-secondary">
+                                                    <small>{{ inventorymodel.updated_date }}</small>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-5">
+                                                    <h6>Who Added</h6>
+                                                </div>
+                                                <div class="col-sm-7 text-secondary">
+                                                    <small>{{ inventorymodel.created_by }}</small>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-5">
+                                                    <h6>Who Update</h6>
+                                                </div>
+                                                <div class="col-sm-7 text-secondary">
+                                                    <small>{{ inventorymodel.updated_by }}</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <!-- END col-9-->
-
-
-                        <!-- END row -->
                     </div>
-                    <!-- END col-10 -->
+
                 </div>
-                <!-- END row -->
             </div>
-        </div>
+
     </section>
-    <!-- END container -->
-
-
 {% endblock %}

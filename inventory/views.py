@@ -1,9 +1,16 @@
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from inventory.models import InventoryModel, OSModel, FactoryModel
+from inventory.models import InventoryModel, OSModel, FactoryModel, HistoryData, MainDomain
 from CIMS.utils import StaffProfileRequiredMixin
 
+
+class DomainCreateView(LoginRequiredMixin, StaffProfileRequiredMixin, CreateView):
+    '''Inventory item CreateView implementation'''
+    model = MainDomain
+    template_name = 'domain_create.html'
+    fields = ['domain_name']
+    success_url = reverse_lazy('inventory_list')
 class InventoryListView(LoginRequiredMixin, ListView):
     '''Inventory ListView implementation'''
     model = InventoryModel
@@ -20,7 +27,7 @@ class InventoryCreateView(LoginRequiredMixin, StaffProfileRequiredMixin, CreateV
     model = InventoryModel
     template_name = 'inventory_create.html'
     fields = ['username', 'type_name', 'factory_name', 'model_name', 'op_system', 'cpu_capacity',
-              'ram_capacity', 'ssd_capacity', 'serial_number', 'status', 'price_buy', 'price_today', 'comment']
+              'ram_capacity', 'ssd_capacity', 'serial_number', 'status', 'price_buy', 'price_today', 'price_sell', 'comment']
     success_url = reverse_lazy('inventory_list')
 
 
@@ -28,6 +35,14 @@ class InventoryDetailsView(LoginRequiredMixin, DetailView):
     '''Inventory item DetailView implementation'''
     model = InventoryModel
     template_name = 'inventory_details.html'
+    def get_context_data(self, **kwargs):
+        """
+        This has been overridden to add `history` to the template context,
+        now you can use {{ history }} within the template
+        """
+        context = super().get_context_data(**kwargs)
+        context['history'] = HistoryData.objects.all().order_by('-pk')
+        return context
 
 
 class InvetoryUpdateView(StaffProfileRequiredMixin, UpdateView):
@@ -35,7 +50,7 @@ class InvetoryUpdateView(StaffProfileRequiredMixin, UpdateView):
     model = InventoryModel
     template_name = 'inventory_update.html'
     fields = ['username', 'type_name', 'factory_name', 'model_name', 'op_system', 'cpu_capacity',
-              'ram_capacity', 'ssd_capacity', 'serial_number', 'status', 'price_buy', 'price_today', 'comment']
+              'ram_capacity', 'ssd_capacity', 'serial_number', 'status', 'price_buy', 'price_today', 'price_sell', 'comment']
 
 
 class OSFListView(LoginRequiredMixin, ListView):
@@ -67,7 +82,7 @@ class FactoryCreateView(LoginRequiredMixin, StaffProfileRequiredMixin, CreateVie
     model = FactoryModel
     template_name = 'factory_create.html'
     fields = '__all__'
-    success_url = reverse_lazy('inventory_list')
+    success_url = reverse_lazy('system_list')
 
 class FactoryDeleteView(LoginRequiredMixin,StaffProfileRequiredMixin,DeleteView):
     '''Factory DeleteView implementation'''

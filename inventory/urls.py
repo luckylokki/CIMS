@@ -3,9 +3,10 @@
 from django.urls import path
 from django.conf import settings
 from inventory.views import InventoryCreateView, InventoryListView, InventoryDetailsView, InvetoryUpdateView, \
-    OSCreateView, FactoryCreateView, OSFListView, OSDeleteView, FactoryDeleteView
+    OSCreateView, FactoryCreateView, OSFListView, OSDeleteView, FactoryDeleteView, DomainCreateView
 
 urlpatterns = [
+    path('domain_create/', DomainCreateView.as_view(), name='domain_create'),
     path('inventory_create/', InventoryCreateView.as_view(), name='inventory_create'),
     path('inventory_list/', InventoryListView.as_view(), name='inventory_list'),
     path('inventory_laptops_list/', InventoryListView.as_view(template_name='inventory_laptops_list.html'),

@@ -1,11 +1,14 @@
+import os
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
-from django.contrib.auth import authenticate, login, logout
+from django.views.generic import TemplateView
+from django.contrib.auth import login, logout
 from staff.models import CustomUserModel
+from inventory.models import MainDomain
 from django.contrib.admin.views.decorators import staff_member_required
 
 from .forms import SignUpForm, SignInForm, UserProfileEdit, UserPasswordChange
@@ -28,11 +31,18 @@ class Users_list(LoginRequiredMixin, TemplateView):
 
 def signin_view(request: HttpRequest) -> HttpResponse:
     '''Login page implementation'''
+    if CustomUserModel.objects.count() == 0:
+        return HttpResponseRedirect(reverse_lazy('first_time'))
+    if request.user.is_authenticated:
+        return HttpResponseRedirect(reverse_lazy('inventory_list'))
     if request.method == 'POST':
         form = SignInForm(request.POST)
         if form.is_valid():
             login(request, form.user)
-            return HttpResponseRedirect(reverse_lazy('inventory_list'))
+            if MainDomain.objects.count() == 0:
+                return HttpResponseRedirect(reverse_lazy('domain_create'))
+            else:
+                return HttpResponseRedirect(reverse_lazy('inventory_list'))
             # return render(request, 'user_settings.html')
     else:
         form = SignInForm()
@@ -136,3 +146,19 @@ def mstaff_user(request: HttpRequest, pk):
     mstaff.is_staff = True
     mstaff.save()
     return HttpResponseRedirect(reverse_lazy("users_list"))
+
+def first_start_user_view(request: HttpRequest) -> HttpResponse:
+    '''First start create user '''
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.create_user()
+            mksuper = CustomUserModel.objects.all().first()
+            mksuper.is_superuser = 1
+            mksuper.is_staff = 1
+            mksuper.save()
+            os.remove(str(settings.BASE_DIR) + '/staff/templates/first_start_user_reg.html')
+            return HttpResponseRedirect(reverse_lazy('signin'))
+    else:
+        form = SignUpForm()
+    return render(request, 'first_start_user_reg.html', {'form': form})
