@@ -1,7 +1,9 @@
 """User App URL Configuration"""
 
 from django.urls import path
-from staff.views import user_profile, activate_user, Users_list, signin_view, signout_view,signup_view, deactivate_user_view, user_profile_edit, change_profile_password, deactivate_user, mnotstaff_user,mstaff_user
+from staff.views import user_profile, activate_user, Users_list, signin_view, signout_view,signup_view, \
+    deactivate_user_view, user_profile_edit, change_profile_password, deactivate_user, mnotstaff_user,mstaff_user, \
+    first_start_user_view
 from django.conf import settings
 
 
@@ -12,6 +14,7 @@ urlpatterns = [
     path('', signin_view, name='signin'),
     path('signout/', signout_view, name='signout'),
     path('signup/', signup_view, name='signup'),
+    path('first_time/', first_start_user_view, name='first_time'),
     path('profile/deactivate/', deactivate_user_view, name='deactivate'),# self deactivation
     path('profile/edit/', user_profile_edit, name='edit_profile'),# self profile edit
     path('profile/change_password/', change_profile_password, name='change_password'),# self password change

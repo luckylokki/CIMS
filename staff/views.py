@@ -1,3 +1,5 @@
+import os
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
@@ -29,6 +31,8 @@ class Users_list(LoginRequiredMixin, TemplateView):
 
 def signin_view(request: HttpRequest) -> HttpResponse:
     '''Login page implementation'''
+    if CustomUserModel.objects.count() == 0:
+        return HttpResponseRedirect(reverse_lazy('first_time'))
     if request.user.is_authenticated:
         return HttpResponseRedirect(reverse_lazy('inventory_list'))
     if request.method == 'POST':
@@ -142,3 +146,19 @@ def mstaff_user(request: HttpRequest, pk):
     mstaff.is_staff = True
     mstaff.save()
     return HttpResponseRedirect(reverse_lazy("users_list"))
+
+def first_start_user_view(request: HttpRequest) -> HttpResponse:
+    '''First start create user '''
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.create_user()
+            mksuper = CustomUserModel.objects.all().first()
+            mksuper.is_superuser = 1
+            mksuper.is_staff = 1
+            mksuper.save()
+            os.remove(str(settings.BASE_DIR) + '/staff/templates/first_start_user_reg.html')
+            return HttpResponseRedirect(reverse_lazy('signin'))
+    else:
+        form = SignUpForm()
+    return render(request, 'first_start_user_reg.html', {'form': form})
