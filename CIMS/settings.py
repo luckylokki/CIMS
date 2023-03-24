@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-
+import os
 from pathlib import Path
 # import os, sys
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -23,9 +23,18 @@ DB_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-dm6id%)f!c5yxmxxy^6d(&)*=mnm!jhp5f89c5we(#n%dqtdpz'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+#for running in debug mode use>> DJANGO_DEBUG=1 python manage.py runserver
+#for production running use python manage.py runserver
+if os.environ.get('DJANGO_DEBUG'):
+    print("Debug is enabled.")
+    DEBUG = True
+    ALLOWED_HOSTS = ["*"]
+    # When not specified, ALLOW_HOSTS defaults to:
+    # ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]']
+else:
+    DEBUG = False
+    ALLOWED_HOSTS = ["*"]
 
-ALLOWED_HOSTS = ['*']
 
 
 # Application definition
