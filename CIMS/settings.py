@@ -144,11 +144,12 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
 # MEDIA FOLDER CHECK
-path_media = "media"
+path_media = str(BASE_DIR) +'/'+ "media"
 isExist = os.path.exists(path_media)
 if not isExist:
    # Create a new directory because it does not exist
     os.makedirs(path_media)
+
 # CRISPY_TEMPLATE_PACK = 'bootstrap4'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / "media"
