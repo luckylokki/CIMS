@@ -6,6 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: cims
+    restart: always
     volumes:
       - .db_data:/usr/src/cims/.db
       - ./media:/usr/src/cims/media

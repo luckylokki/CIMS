@@ -6,6 +6,7 @@ services:
       context: .
       dockerfile: dockerfile-dev
     container_name: cims-dev
+    restart: always
     environment:
       DJANGO_DEBUG: 1
     volumes:

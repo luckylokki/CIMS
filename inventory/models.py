@@ -116,5 +116,5 @@ def signal_handler_qr(sender, instance, **kwargs):
     qr.add_data(main_adress)
     qr.make(fit=True)
     img = qr.make_image(fill="black", back_color="white")
-    print(str(settings.MEDIA_ROOT) + '/' + str(instance.pk) + '.png')
-    img.save(str(settings.MEDIA_ROOT) + '/' + str(instance.pk) + '.png')
+    print(str(settings.STATIC_FOLDER) + '/' + str(instance.pk) + '.png')
+    img.save(str(settings.STATIC_FOLDER) + '/' + str(instance.pk) + '.png')
