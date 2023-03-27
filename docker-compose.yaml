@@ -9,7 +9,7 @@ services:
     restart: always
     volumes:
       - .db_data:/usr/src/cims/.db
-      - ./media:/usr/src/cims/media
+      - ./static:/usr/src/cims/static
       - ./migrations_staff:/usr/src/cims/staff/migrations
       - ./migrations_inventory:/usr/src/cims/inventory/migrations
     ports:
