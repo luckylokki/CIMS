@@ -36,6 +36,7 @@ class MainDomain(models.Model):
     def __str__(self) -> str:
         return self.domain_name
 
+
 class InventoryModel(models.Model):
     """Maim Model with invetory"""
     qrcode = models.ImageField(upload_to='qr_codes', null=True, blank=True)
@@ -82,7 +83,7 @@ class InventoryModel(models.Model):
 
         # We got pk after save above.
         if is_create:
-            self.qrcode = str(self.pk) + '.png'
+            self.qrcode = 'qr/' + str(self.pk) + '.png'
             super().save(update_fields=["qrcode"])
 
 
@@ -116,5 +117,4 @@ def signal_handler_qr(sender, instance, **kwargs):
     qr.add_data(main_adress)
     qr.make(fit=True)
     img = qr.make_image(fill="black", back_color="white")
-    print(str(settings.STATIC_FOLDER) + '/' + str(instance.pk) + '.png')
-    img.save(str(settings.STATIC_FOLDER) + '/' + str(instance.pk) + '.png')
+    img.save(str(settings.STATIC_FOLDER) + '/qr/' + str(instance.pk) + '.png')
