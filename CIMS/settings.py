@@ -140,7 +140,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 # MEDIA FOLDER CHECK
-path_media = "static"
+path_media = "static/qr"
 isExist = os.path.exists(path_media)
 if not isExist:
    # Create a new directory because it does not exist
