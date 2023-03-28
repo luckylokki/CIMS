@@ -23,12 +23,15 @@
                                                 {{ message }}
                                             </div>
                                         {% endif %}
-                                        <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Inventory Management System</h5>
+                                        <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Inventory
+                                            Management System</h5>
 
-                                            {{ form|crispy }}
-                                            <button type="submit">SignIn</button>
+                                        {{ form|crispy }}
+                                        <div class="p-2"><span class="btn btn-outline-info" type="submit">SignIn</span>
 
-                                        <a class="small text-muted" href="#!">Forgot password?</a>
+
+                                            <a class="small text-muted" href="#!">Forgot password?</a>
+                                        </div>
 
                                     </form>
                                 </div>
