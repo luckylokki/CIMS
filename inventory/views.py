@@ -27,7 +27,7 @@ class InventoryCreateView(LoginRequiredMixin, StaffProfileRequiredMixin, CreateV
     model = InventoryModel
     template_name = 'inventory_create.html'
     fields = ['username', 'type_name', 'factory_name', 'model_name', 'op_system', 'cpu_capacity',
-              'ram_capacity', 'ssd_capacity', 'serial_number', 'sec_serial_number', 'status', 'price_buy', 'price_today', 'price_sell', 'comment']
+              'ram_capacity', 'ssd_capacity', 'serial_number', 'second_serial_number', 'status', 'price_buy', 'price_today', 'price_sell', 'comment']
     success_url = reverse_lazy('inventory_list')
 
 
@@ -50,7 +50,7 @@ class InvetoryUpdateView(StaffProfileRequiredMixin, UpdateView):
     model = InventoryModel
     template_name = 'inventory_update.html'
     fields = ['username', 'type_name', 'factory_name', 'model_name', 'op_system', 'cpu_capacity',
-              'ram_capacity', 'ssd_capacity', 'serial_number', 'sec_serial_number', 'status', 'price_buy', 'price_today', 'price_sell', 'comment']
+              'ram_capacity', 'ssd_capacity', 'serial_number', 'second_serial_number', 'status', 'price_buy', 'price_today', 'price_sell', 'comment']
 
 
 class OSFListView(LoginRequiredMixin, ListView):
