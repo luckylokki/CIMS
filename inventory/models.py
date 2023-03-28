@@ -55,7 +55,7 @@ class InventoryModel(models.Model):
     ram_capacity = models.CharField(max_length=30, blank=True)
     ssd_capacity = models.CharField(max_length=30, blank=True)
     serial_number = models.CharField(max_length=30, blank=True)
-    sec_serial_number = models.CharField(max_length=30, blank=True)
+    second_serial_number = models.CharField(max_length=30, blank=True)
     status_choice = (
         ('Free', 'Free'),
         ('Used', 'Used'),
