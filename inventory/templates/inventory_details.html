@@ -16,7 +16,7 @@
                                     <div class="mt-3">
                                         <h4>{{ inventorymodel.username }}</h4>
                                         <p class="text-secondary mb-1">
-                                            {% if invetnorymodel.status == 'Free' %}
+                                            {% if inventorymodel.status == 'Free' %}
                                                 <span class="text-success">Free</span>
                                             {% elif inventorymodel.status == 'Used' %}
                                                 <span class="text-primary">Used</span>
@@ -38,16 +38,16 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card mt-3">
-                            <div class="card-body">
-                                <h5 class="d-flex align-items-center mb-3">Comments<i
-                                        class="material-icons text-info mr-2">>>information</i>
-                                </h5>
-
-                                <small>{{ inventorymodel.comment }}</small>
-
+                        {% if inventorymodel.comment %}
+                            <div class="card mt-3">
+                                <div class="card-body">
+                                    <h5 class="d-flex align-items-center mb-3">Comments<i
+                                            class="material-icons text-info mr-2">>>information</i>
+                                    </h5>
+                                    <small>{{ inventorymodel.comment }}</small>
+                                </div>
                             </div>
-                        </div>
+                        {% endif %}
                         <div class="card mt-3">
                             <div class="card-body">
                                 <ul class="list-group list-group-flush">
@@ -87,7 +87,7 @@
                                     <div class="col">
                                         <div class="row">
                                             <div class="col-sm-3">
-                                                <h6 class="mb-0">Full Name</h6>
+                                                <h6 class="mb-0">Name</h6>
                                             </div>
                                             <div class="col-sm-9 text-secondary">
                                                 {{ inventorymodel.username }}
@@ -105,37 +105,31 @@
                                         <hr>
                                         <div class="row">
                                             <div class="col-sm-3">
-                                                <h6 class="mb-0">Phone</h6>
+                                                <h6 class="mb-0">CPU</h6>
                                             </div>
                                             <div class="col-sm-9 text-secondary">
-                                                (239) 816-9029
+                                                {{ inventorymodel.cpu_capacity }}
                                             </div>
                                         </div>
                                         <hr>
                                         <div class="row">
                                             <div class="col-sm-3">
-                                                <h6 class="mb-0">Mobile</h6>
+                                                <h6 class="mb-0">RAM</h6>
                                             </div>
                                             <div class="col-sm-9 text-secondary">
-                                                (320) 380-4539
+                                                {{ inventorymodel.ram_capacity }}
                                             </div>
                                         </div>
                                         <hr>
                                         <div class="row">
                                             <div class="col-sm-3">
-                                                <h6 class="mb-0">Address</h6>
+                                                <h6 class="mb-0">SSD</h6>
                                             </div>
                                             <div class="col-sm-9 text-secondary">
-                                                Bay Area, San Francisco, CA
+                                                {{ inventorymodel.ssd_capacity }}
                                             </div>
                                         </div>
                                         <hr>
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <a class="btn btn-info " target="__blank"
-                                                   href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills">Edit</a>
-                                            </div>
-                                        </div>
                                     </div>
                                     <!-- COL 2 DETAILS -->
                                     <div class="col">
@@ -144,7 +138,7 @@
                                                 <h6 class="mb-0">Status</h6>
                                             </div>
                                             <div class="col-sm-9 text-secondary">
-                                                {% if invetnorymodel.status == 'Free' %}
+                                                {% if inventorymodel.status == 'Free' %}
                                                     <span class="badge bg-success align-items-center">Free</span>
                                                 {% elif inventorymodel.status == 'Used' %}
                                                     <span class="badge bg-primary align-items-center">Used</span>
@@ -171,37 +165,31 @@
                                         <hr>
                                         <div class="row">
                                             <div class="col-sm-3">
-                                                <h6 class="mb-0">Phone</h6>
+                                                <h6 class="mb-0">OS</h6>
                                             </div>
                                             <div class="col-sm-9 text-secondary">
-                                                (239) 816-9029
+                                                {{ inventorymodel.op_system }}
                                             </div>
                                         </div>
                                         <hr>
                                         <div class="row">
                                             <div class="col-sm-3">
-                                                <h6 class="mb-0">Mobile</h6>
+                                                <h6 class="mb-0">S/N</h6>
                                             </div>
                                             <div class="col-sm-9 text-secondary">
-                                                (320) 380-4539
+                                                {{ inventorymodel.serial_number }}
                                             </div>
                                         </div>
                                         <hr>
                                         <div class="row">
                                             <div class="col-sm-3">
-                                                <h6 class="mb-0">Address</h6>
+                                                <h6 class="mb-0">S/N 2-nd</h6>
                                             </div>
                                             <div class="col-sm-9 text-secondary">
-                                                Bay Area, San Francisco, CA
+                                                {{ inventorymodel.sec_serial_number }}
                                             </div>
                                         </div>
                                         <hr>
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <a class="btn btn-info " target="__blank"
-                                                   href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills">Edit</a>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>

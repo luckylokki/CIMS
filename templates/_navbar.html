@@ -1,12 +1,12 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
     {% if domain %}
-        <a class="navbar-brand" href="{% url 'inventory_list' %}" style="margin-left: 20px;">CIMS</a>
+        <a class="navbar-brand text-info" href="{% url 'inventory_list' %}" style="margin-left: 20px;">CIMS</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
                 aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
     {% else %}
-        <a class="navbar-brand" href="{% url 'domain_create' %}" style="margin-left: 20px;">CIMS</a>
+        <a class="navbar-brand text-info" href="{% url 'domain_create' %}" style="margin-left: 20px;">CIMS</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
                 aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -43,8 +43,8 @@
         {% if request.user.is_authenticated %}
 
             <ul class="navbar-nav justify-content-end">
-                <div class="btn-group">
-                    <button type="button" class="btn btn-outline-warning nav-link dropdown-toggle"
+                <div class="btn-group mx-2">
+                    <button type="button" class="btn btn-outline-info nav-link dropdown-toggle"
                             data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">User:
                         {{ user }}
                     </button>

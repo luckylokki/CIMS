@@ -45,7 +45,7 @@ class SignInForm(forms.ModelForm):
         fields = 'username', 'password'
         widgets = {'password': forms.PasswordInput}
         help_texts = {'username': None}
-        labels = {'username': False, 'password': False}
+        labels = {'username': 'Username', 'password': 'Password'}
 
     def __init__(self, *args, **kwargs):
         self.user = None

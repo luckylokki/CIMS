@@ -55,6 +55,7 @@ class InventoryModel(models.Model):
     ram_capacity = models.CharField(max_length=30, blank=True)
     ssd_capacity = models.CharField(max_length=30, blank=True)
     serial_number = models.CharField(max_length=30, blank=True)
+    sec_serial_number = models.CharField(max_length=30, blank=True)
     status_choice = (
         ('Free', 'Free'),
         ('Used', 'Used'),
@@ -71,7 +72,7 @@ class InventoryModel(models.Model):
     price_buy = models.IntegerField(default=0, null=True, blank=True)
     price_today = models.IntegerField(default=0, null=True, blank=True)
     price_sell = models.IntegerField(default=0, null=True, blank=True)
-    is_delete = models.BooleanField(default=False)
+    is_delete = models.BooleanField(default=False)#TODO:
     comment = models.TextField(null=True, blank=True)
 
     def get_absolute_url(self):  # new
@@ -91,13 +92,14 @@ class HistoryData(models.Model):
     """Maim Model with invetory"""
     invent_id = models.IntegerField(default=0, null=True, blank=True)
     username = models.CharField(max_length=60)
+    sys_user = models.CharField(max_length=60)#system suer who do record
     use_date = models.DateTimeField(auto_now_add=True, null=True)
 
     def get_absolute_url(self):  # new
         return reverse('inventory_details', kwargs={'pk': self.pk})
 
     def __str__(self):
-        return '%s %s %s' % (self.pk, self.username, self.use_date)
+        return '%s %s %s %s' % (self.pk, self.username, self.use_date, self.sys_user)
 
 
 @receiver(post_save, sender=InventoryModel)
@@ -105,9 +107,9 @@ def signal_handler_history(sender, instance, **kwargs):
     if HistoryData.objects.count() != 0:
         if instance.username != HistoryData.objects.last().username:
             HistoryData.objects.create(username=instance.username, use_date=instance.updated_date,
-                                       invent_id=instance.pk)
+                                       invent_id=instance.pk, sys_user=instance.updated_by)
     else:
-        HistoryData.objects.create(username=instance.username, use_date=instance.updated_date, invent_id=instance.pk)
+        HistoryData.objects.create(username=instance.username, use_date=instance.updated_date, invent_id=instance.pk, sys_user=instance.updated_by)
 
 
 @receiver(post_save, sender=InventoryModel)

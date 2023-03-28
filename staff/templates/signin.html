@@ -5,7 +5,7 @@
     <section class="vh-100" style="background-color: #eee;">
         <div class="container py-5 h-50">
             <div class="row d-flex justify-content-center align-items-center h-100">
-                <div class="col col-xl-3">
+                <div class="col col-sm-4 ">
                     <div class="card" style="border-radius: 1rem;">
                         <div class="row g-0">
 
@@ -23,12 +23,15 @@
                                                 {{ message }}
                                             </div>
                                         {% endif %}
-                                        <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Inventory Management System</h5>
+                                        <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Inventory
+                                            Management System</h5>
 
-                                            {{ form|crispy }}
-                                            <button type="submit">SignIn</button>
+                                        {{ form|crispy }}
+                                        <div class="p-2">
+                                        <button class="btn btn-outline-info" type="submit">SignIn</button>
 
-                                        <a class="small text-muted" href="#!">Forgot password?</a>
+                                            <a class="small text-muted" href="#!">Forgot password?</a>
+                                        </div>
 
                                     </form>
                                 </div>
