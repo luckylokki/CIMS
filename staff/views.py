@@ -157,7 +157,7 @@ def first_start_user_view(request: HttpRequest) -> HttpResponse:
             mksuper.is_superuser = 1
             mksuper.is_staff = 1
             mksuper.save()
-            os.remove(str(settings.BASE_DIR) + '/staff/templates/first_start_user_reg.html')
+            #os.remove(str(settings.BASE_DIR) + '/staff/templates/first_start_user_reg.html')
             return HttpResponseRedirect(reverse_lazy('signin'))
     else:
         form = SignUpForm()
