@@ -17,6 +17,8 @@ class OSModel(models.Model):
     """Model for Operation systems"""
     op_system = models.CharField(max_length=30, blank=False)
 
+    class Meta:
+        ordering = ['op_system']
     def __str__(self) -> str:
         return self.op_system
 
@@ -24,6 +26,8 @@ class OSModel(models.Model):
 class FactoryModel(models.Model):
     """Model for Factory names"""
     factory_name = models.CharField(max_length=30, blank=False)
+    class Meta:
+        ordering = ['factory_name']
 
     def __str__(self) -> str:
         return self.factory_name
