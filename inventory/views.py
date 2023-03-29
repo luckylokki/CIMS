@@ -59,9 +59,9 @@ class OSFListView(LoginRequiredMixin, ListView):
     template_name = 'systems.html'
 
     def get_context_data(self):
-        context = super(OSFListView, self).get_context_data()
+        context = super(OSFListView, self).get_context_data().order_by('op_system')
         context['os_list'] = OSModel.objects.all()
-        context['factory_list'] = FactoryModel.objects.all()
+        context['factory_list'] = FactoryModel.objects.all().order_by('factory_name')
         return context
 
 
