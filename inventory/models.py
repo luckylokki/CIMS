@@ -8,7 +8,6 @@ from django.conf import settings
 from django_currentuser.db.models import CurrentUserField
 
 
-
 def get_default_datetime():
     now = datetime.now().strftime("%b.%d,%Y %H:%M:%S")
     return now
@@ -151,7 +150,7 @@ def signal_handler_purchase(sender, instance, **kwargs):
     if instance.new_purchase == 1:
         if not PurchaseData.objects.filter(link_id=instance.pk).exists():
             PurchaseData.objects.create(link_id=instance.pk, username=instance.username,
-                                        model_fact=fm,type_name=instance.type_name,
+                                        model_fact=fm, type_name=instance.type_name,
                                         buy_date=instance.created_date, price_buy=instance.price_buy,
                                         serial_number=instance.serial_number)
 
