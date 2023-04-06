@@ -67,13 +67,13 @@
                                         <tr>
                                             <td class="align-middle">
                                                 <!-- view purchase -->
-                                                <a href="{% url 'inventory_details' pk=instance.pk %}"
+                                                <a href="{% url 'inventory_details' pk=instance.link_id %}"
                                                    class="btn btn-warning btn-sm" title="Device info"><i
                                                         class="fa fa-eye" aria-hidden="true"></i></a>
 
                                             </td>
                                             <td class="align-middle"><a
-                                                    href="{% url "inventory_details" pk=instance.pk %}">{{ forloop.counter }}</a>
+                                                    href="{% url "inventory_details" pk=instance.link_id %}">{{ forloop.counter }}</a>
                                             </td>
                                             <td class="align-middle">{{ instance.username }}</td>
                                             <td class="align-middle">{{ instance.model_fact }}</td>
