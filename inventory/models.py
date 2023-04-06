@@ -8,6 +8,7 @@ from django.conf import settings
 from django_currentuser.db.models import CurrentUserField
 
 
+
 def get_default_datetime():
     now = datetime.now().strftime("%b.%d,%Y %H:%M:%S")
     return now
@@ -19,6 +20,7 @@ class OSModel(models.Model):
 
     class Meta:
         ordering = ['op_system']
+
     def __str__(self) -> str:
         return self.op_system
 
@@ -26,6 +28,7 @@ class OSModel(models.Model):
 class FactoryModel(models.Model):
     """Model for Factory names"""
     factory_name = models.CharField(max_length=30, blank=False)
+
     class Meta:
         ordering = ['factory_name']
 
@@ -76,8 +79,9 @@ class InventoryModel(models.Model):
     price_buy = models.IntegerField(default=0, null=True, blank=True)
     price_today = models.IntegerField(default=0, null=True, blank=True)
     price_sell = models.IntegerField(default=0, null=True, blank=True)
-    is_delete = models.BooleanField(default=False)#TODO:
+    is_delete = models.BooleanField(default=False)
     comment = models.TextField(null=True, blank=True)
+    new_purchase = models.BooleanField(default=False)
 
     def get_absolute_url(self):  # new
         return reverse('inventory_details', kwargs={'pk': self.pk})
@@ -92,11 +96,29 @@ class InventoryModel(models.Model):
             super().save(update_fields=["qrcode"])
 
 
+class PurchaseData(models.Model):
+    """History model who used inventory before"""
+    link_id = models.IntegerField(default=0, null=True, blank=True)
+    username = models.CharField(max_length=60)
+    model_fact = models.CharField(max_length=60)
+    type_name = models.CharField(max_length=30, null=True)
+    buy_date = models.DateTimeField(auto_now_add=True, null=True)
+    price_buy = models.IntegerField(default=0, null=True, blank=True)
+    serial_number = models.CharField(max_length=30, blank=True)
+
+    def get_absolute_url(self):  # new
+        return reverse('inventory_purchase', kwargs={'pk': self.pk})
+
+    def __str__(self):
+        return '%s %s %s %s %s %s' % (
+            self.pk, self.model_fact, self.username, self.buy_date, self.price_buy, self.serial_number)
+
+
 class HistoryData(models.Model):
     """Maim Model with invetory"""
     invent_id = models.IntegerField(default=0, null=True, blank=True)
     username = models.CharField(max_length=60)
-    sys_user = models.CharField(max_length=60)#system suer who do record
+    sys_user = models.CharField(max_length=60)  # system suer who do record
     use_date = models.DateTimeField(auto_now_add=True, null=True)
 
     def get_absolute_url(self):  # new
@@ -108,12 +130,30 @@ class HistoryData(models.Model):
 
 @receiver(post_save, sender=InventoryModel)
 def signal_handler_history(sender, instance, **kwargs):
+    print(get_default_datetime())
     if HistoryData.objects.count() != 0:
-        if instance.username != HistoryData.objects.last().username:
+        if HistoryData.objects.filter(invent_id=instance.pk).exists():
+            if instance.username != HistoryData.objects.filter(invent_id=instance.pk).last().username:
+                HistoryData.objects.create(username=instance.username, use_date=instance.updated_date,
+                                           invent_id=instance.pk, sys_user=instance.updated_by)
+        else:
             HistoryData.objects.create(username=instance.username, use_date=instance.updated_date,
-                                       invent_id=instance.pk, sys_user=instance.updated_by)
+                                       invent_id=instance.pk,
+                                       sys_user=instance.updated_by)
     else:
-        HistoryData.objects.create(username=instance.username, use_date=instance.updated_date, invent_id=instance.pk, sys_user=instance.updated_by)
+        HistoryData.objects.create(username=instance.username, use_date=instance.updated_date, invent_id=instance.pk,
+                                   sys_user=instance.updated_by)
+
+
+@receiver(post_save, sender=InventoryModel)
+def signal_handler_purchase(sender, instance, **kwargs):
+    fm = str(instance.factory_name) + ' ' + str(instance.model_name)
+    if instance.new_purchase == 1:
+        if not PurchaseData.objects.filter(link_id=instance.pk).exists():
+            PurchaseData.objects.create(link_id=instance.pk, username=instance.username,
+                                        model_fact=fm,type_name=instance.type_name,
+                                        buy_date=instance.created_date, price_buy=instance.price_buy,
+                                        serial_number=instance.serial_number)
 
 
 @receiver(post_save, sender=InventoryModel)
