@@ -2,7 +2,7 @@
 {% load crispy_forms_tags %}
 {% block title %}{{ username }} Profile{% endblock %}
 {% block content %}
-    <section class="vh-200" style="background-color: #eee;">
+    <section style="background-color: #eee;">
         <div class="container py-3 h-100">
             <div class="row content-center">
                 <div class="row justify-content-center">
@@ -31,8 +31,8 @@
                                                 {{ form|crispy }}
                                             </div>
 
-                                            <a href="{% url "inventory_list" %}" type="button" class="btn btn-outline">Cancel</a>
-                                            <button class="btn btn-outline-theme" type="submit">Save changes</button>
+                                            <a href="{% url "inventory_list" %}" type="button" class="btn btn-outline-danger">Cancel</a>
+                                            <button class="btn btn-outline-success" type="submit">Save changes</button>
 
                                         </form>
                                     </div>
