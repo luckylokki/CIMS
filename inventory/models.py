@@ -100,8 +100,9 @@ class PurchaseData(models.Model):
     """History model who used inventory before"""
     link_id = models.IntegerField(default=0, null=True, blank=True)
     username = models.CharField(max_length=60)
-    model_fact = models.CharField(max_length=60)  # system suer who do record
-    use_date = models.DateTimeField(auto_now_add=True, null=True)
+    model_fact = models.CharField(max_length=60)
+    type_name = models.CharField(max_length=30, null=True)
+    buy_date = models.DateTimeField(auto_now_add=True, null=True)
     price_buy = models.IntegerField(default=0, null=True, blank=True)
     serial_number = models.CharField(max_length=30, blank=True)
 
@@ -110,7 +111,7 @@ class PurchaseData(models.Model):
 
     def __str__(self):
         return '%s %s %s %s %s %s' % (
-            self.pk, self.model_fact, self.username, self.use_date, self.price_buy, self.serial_number)
+            self.pk, self.model_fact, self.username, self.buy_date, self.price_buy, self.serial_number)
 
 
 class HistoryData(models.Model):
@@ -150,8 +151,8 @@ def signal_handler_purchase(sender, instance, **kwargs):
     if instance.new_purchase == 1:
         if not PurchaseData.objects.filter(link_id=instance.pk).exists():
             PurchaseData.objects.create(link_id=instance.pk, username=instance.username,
-                                        model_fact=fm,
-                                        use_date=instance.created_date, price_buy=instance.price_buy,
+                                        model_fact=fm,type_name=instance.type_name,
+                                        buy_date=instance.created_date, price_buy=instance.price_buy,
                                         serial_number=instance.serial_number)
 
 
