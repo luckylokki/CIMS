@@ -19,7 +19,6 @@ class InventoryListView(LoginRequiredMixin, ListView):
     template_name = 'invetory_all.html'
     context_object_name = 'inventory'
     # paginate_by = 10
-
     def get_paginate_by(self, queryset):
         return self.request.GET.get("paginate_by", self.paginate_by)
 
