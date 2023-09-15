@@ -18,7 +18,7 @@ class InventoryListView(LoginRequiredMixin, ListView):
     model = InventoryModel
     template_name = 'invetory_all.html'
     context_object_name = 'inventory'
-    paginate_by = 10
+    # paginate_by = 10
 
     def get_paginate_by(self, queryset):
         return self.request.GET.get("paginate_by", self.paginate_by)
@@ -63,7 +63,7 @@ class PurchaseListView(LoginRequiredMixin, ListView):
     model = PurchaseData
     template_name = 'purchase_all.html'
     context_object_name = 'purchase'
-    paginate_by = 10
+    # paginate_by = 10
 
     def get_paginate_by(self, queryset):
         return self.request.GET.get("paginate_by", self.paginate_by)
