@@ -2,9 +2,7 @@
 {% load crispy_forms_tags %}
 {% block title %}{{ username }} Profile{% endblock %}
 {% block content %}
-    <section style="background-color: #eee;">
-        <div class="container py-3 h-100">
-            <div class="row content-center">
+
                 <div class="row justify-content-center">
                     <!-- BEGIN col-10 -->
                     <div class="col-xl-10">
@@ -32,7 +30,7 @@
                                             </div>
 
                                             <a href="{% url "inventory_list" %}" type="button" class="btn btn-outline-danger">Cancel</a>
-                                            <button class="btn btn-outline-success" type="submit">Save changes</button>
+                                            <button class="btn btn-outline-theme" type="submit">Save changes</button>
 
                                         </form>
                                     </div>
@@ -55,9 +53,7 @@
                 </div>
                 <!-- END row -->
             </div>
-        </div>
-        </div>
-    </section>
+
     <!-- END container -->
 
 {% endblock %}
