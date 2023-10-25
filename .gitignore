@@ -19,4 +19,5 @@ __pycache__
 # temporary files storage
 /temp/
 /tmp/
-
+/static/assets/
+/static/assets
