@@ -17,17 +17,17 @@
                                 <h4>{{ inventorymodel.username }}</h4>
                                 <p class="text-secondary mb-1">
                                     {% if inventorymodel.status == 'Free' %}
-                                        <span class="text-success">Free</span>
+                                        <span class="text-green">Free</span>
                                     {% elif inventorymodel.status == 'Used' %}
                                         <span class="text-primary">Used</span>
                                     {% elif inventorymodel.status == 'Broken' %}
                                         <span class="text-danger">Broken</span>
                                     {% elif inventorymodel.status == 'Stored' %}
-                                        <span class="text-warning">Stored</span>
+                                        <span class="text-yellow">Stored</span>
                                     {% elif inventorymodel.status == 'Sold' %}
-                                        <span class="text-secondary">Sold</span>
+                                        <span class="text-indigo">Sold</span>
                                     {% elif inventorymodel.status == 'Decommis' %}
-                                        <span class="text-dark">Decommis</span>
+                                        <span class="text-secondary">Decommis</span>
                                     {% endif %}
                                     {{ inventorymodel.type_name }}
                                 </p>
@@ -158,17 +158,30 @@
                                     </div>
                                     <div class="col-sm-9 text-secondary">
                                         {% if inventorymodel.status == 'Free' %}
-                                            <span class="badge bg-success align-items-center">Free</span>
+                                            <td class="py-1 align-middle"><span
+                                                    class="badge text-green px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i
+                                                    class="fa fa-circle fs-9px fa-fw me-5px"></i> Free</span></td>
                                         {% elif inventorymodel.status == 'Used' %}
-                                            <span class="badge bg-primary align-items-center">Used</span>
+                                            <td class="py-1 align-middle"><span
+                                                    class="badge text-primary px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i
+                                                    class="fa fa-circle fs-9px fa-fw me-5px"></i> Used</span></td>
                                         {% elif inventorymodel.status == 'Broken' %}
-                                            <span class="badge bg-danger align-items-center">Broken</span>
+                                            <td class="py-1 align-middle"><span
+                                                    class="badge text-danger px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i
+                                                    class="fa fa-circle fs-9px fa-fw me-5px"></i> Broken</span></td>
                                         {% elif inventorymodel.status == 'Stored' %}
-                                            <span class="badge bg-warning align-items-center">Stored</span>
+                                            <td class="py-1 align-middle"><span
+                                                    class="badge text-yellow px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i
+                                                    class="fa fa-circle fs-9px fa-fw me-5px"></i> Stored</span></td>
                                         {% elif inventorymodel.status == 'Sold' %}
-                                            <span class="badge bg-secondary align-items-center">Sold</span>
+                                            <td class="py-1 align-middle"><span
+                                                    class="badge text-indigo px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i
+                                                    class="fa fa-circle fs-9px fa-fw me-5px"></i> Sold</span></td>
                                         {% elif inventorymodel.status == 'Decommis' %}
-                                            <span class="badge bg-dark align-items-center">Decommis</span>
+                                            <td class="py-1 align-middle"><span
+                                                    class="badge text-secondary px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i
+                                                    class="fa fa-circle fs-9px fa-fw me-5px"></i> Decommis</span></td>
+                                            </td>
                                         {% endif %}
                                     </div>
                                 </div>

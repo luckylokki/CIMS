@@ -85,28 +85,29 @@
 
                                             {% if instance.status == 'Free' %}
                                                 <td class="py-1 align-middle"><span
-                                            class="badge text-green px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i
-                                            class="fa fa-circle fs-9px fa-fw me-5px"></i> Free</span></td>
+                                                        class="badge text-green px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i
+                                                        class="fa fa-circle fs-9px fa-fw me-5px"></i> Free</span></td>
                                             {% elif instance.status == 'Used' %}
                                                 <td class="py-1 align-middle"><span
-                                            class="badge text-primary px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i
-                                            class="fa fa-circle fs-9px fa-fw me-5px"></i> Used</span></td>
+                                                        class="badge text-primary px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i
+                                                        class="fa fa-circle fs-9px fa-fw me-5px"></i> Used</span></td>
                                             {% elif instance.status == 'Broken' %}
                                                 <td class="py-1 align-middle"><span
-                                            class="badge text-danger px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i
-                                            class="fa fa-circle fs-9px fa-fw me-5px"></i> Broken</span></td>
+                                                        class="badge text-danger px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i
+                                                        class="fa fa-circle fs-9px fa-fw me-5px"></i> Broken</span></td>
                                             {% elif instance.status == 'Stored' %}
                                                 <td class="py-1 align-middle"><span
-                                            class="badge text-yellow px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i
-                                            class="fa fa-circle fs-9px fa-fw me-5px"></i> Stored</span></td>
+                                                        class="badge text-yellow px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i
+                                                        class="fa fa-circle fs-9px fa-fw me-5px"></i> Stored</span></td>
                                             {% elif instance.status == 'Sold' %}
                                                 <td class="py-1 align-middle"><span
-                                            class="badge text-indigo px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i
-                                            class="fa fa-circle fs-9px fa-fw me-5px"></i> Sold</span></td>
+                                                        class="badge text-indigo px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i
+                                                        class="fa fa-circle fs-9px fa-fw me-5px"></i> Sold</span></td>
                                             {% elif instance.status == 'Decommis' %}
                                                 <td class="py-1 align-middle"><span
-                                            class="badge text-secondary px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i
-                                            class="fa fa-circle fs-9px fa-fw me-5px"></i> Decommis</span></td>
+                                                        class="badge text-secondary px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i
+                                                        class="fa fa-circle fs-9px fa-fw me-5px"></i> Decommis</span>
+                                                </td>
                                                 </td>
                                             {% endif %}
                                             <td class="align-middle">{{ instance.username }}</td>
@@ -169,31 +170,32 @@
                                                         href="{% url "inventory_details" pk=instance.pk %}">{{ forloop.counter }}</a>
                                                 </td>
 
-                                                {% if instance.status == 'Free' %}
-                                                    <td class="py-1 align-middle"><span
-                                                            class="badge bg-success align-items-center"> Free</span>
-                                                    </td>
-                                                {% elif instance.status == 'Used' %}
-                                                    <td class="py-1 align-middle"><span
-                                                            class="badge bg-primary align-items-center"> Used</span>
-                                                    </td>
-                                                {% elif instance.status == 'Broken' %}
-                                                    <td class="py-1 align-middle"><span
-                                                            class="badge bg-danger align-items-center"> Broken</span>
-                                                    </td>
-                                                {% elif instance.status == 'Stored' %}
-                                                    <td class="py-1 align-middle"><span
-                                                            class="badge bg-warning align-items-center"> Stored</span>
-                                                    </td>
-                                                {% elif instance.status == 'Sold' %}
-                                                    <td class="py-1 align-middle"><span
-                                                            class="badge bg-secondary align-items-center"> Sold</span>
-                                                    </td>
-                                                {% elif instance.status == 'Decommis' %}
-                                                    <td class="py-1 align-middle"><span
-                                                            class="badge bg-dark align-items-center"> Decommis</span>
-                                                    </td>
-                                                {% endif %}
+                                             {% if instance.status == 'Free' %}
+                                                <td class="py-1 align-middle"><span
+                                            class="badge text-green px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i
+                                            class="fa fa-circle fs-9px fa-fw me-5px"></i> Free</span></td>
+                                            {% elif instance.status == 'Used' %}
+                                                <td class="py-1 align-middle"><span
+                                            class="badge text-primary px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i
+                                            class="fa fa-circle fs-9px fa-fw me-5px"></i> Used</span></td>
+                                            {% elif instance.status == 'Broken' %}
+                                                <td class="py-1 align-middle"><span
+                                            class="badge text-danger px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i
+                                            class="fa fa-circle fs-9px fa-fw me-5px"></i> Broken</span></td>
+                                            {% elif instance.status == 'Stored' %}
+                                                <td class="py-1 align-middle"><span
+                                            class="badge text-yellow px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i
+                                            class="fa fa-circle fs-9px fa-fw me-5px"></i> Stored</span></td>
+                                            {% elif instance.status == 'Sold' %}
+                                                <td class="py-1 align-middle"><span
+                                            class="badge text-indigo px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i
+                                            class="fa fa-circle fs-9px fa-fw me-5px"></i> Sold</span></td>
+                                            {% elif instance.status == 'Decommis' %}
+                                                <td class="py-1 align-middle"><span
+                                            class="badge text-secondary px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i
+                                            class="fa fa-circle fs-9px fa-fw me-5px"></i> Decommis</span></td>
+                                                </td>
+                                            {% endif %}
 
                                                 <td class="align-middle">{{ instance.username }}</td>
                                                 <td class="align-middle">{{ instance.type_name }}</td>
@@ -253,31 +255,32 @@
                                                         href="{% url "inventory_details" pk=instance.pk %}">{{ forloop.counter }}</a>
                                                 </td>
 
-                                                {% if instance.status == 'Free' %}
-                                                    <td class="py-1 align-middle"><span
-                                                            class="badge bg-success align-items-center"> Free</span>
-                                                    </td>
-                                                {% elif instance.status == 'Used' %}
-                                                    <td class="py-1 align-middle"><span
-                                                            class="badge bg-primary align-items-center"> Used</span>
-                                                    </td>
-                                                {% elif instance.status == 'Broken' %}
-                                                    <td class="py-1 align-middle"><span
-                                                            class="badge bg-danger align-items-center"> Broken</span>
-                                                    </td>
-                                                {% elif instance.status == 'Stored' %}
-                                                    <td class="py-1 align-middle"><span
-                                                            class="badge bg-warning align-items-center"> Stored</span>
-                                                    </td>
-                                                {% elif instance.status == 'Sold' %}
-                                                    <td class="py-1 align-middle"><span
-                                                            class="badge bg-secondary align-items-center"> Sold</span>
-                                                    </td>
-                                                {% elif instance.status == 'Decommis' %}
-                                                    <td class="py-1 align-middle"><span
-                                                            class="badge bg-dark align-items-center"> Decommis</span>
-                                                    </td>
-                                                {% endif %}
+                                             {% if instance.status == 'Free' %}
+                                                <td class="py-1 align-middle"><span
+                                            class="badge text-green px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i
+                                            class="fa fa-circle fs-9px fa-fw me-5px"></i> Free</span></td>
+                                            {% elif instance.status == 'Used' %}
+                                                <td class="py-1 align-middle"><span
+                                            class="badge text-primary px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i
+                                            class="fa fa-circle fs-9px fa-fw me-5px"></i> Used</span></td>
+                                            {% elif instance.status == 'Broken' %}
+                                                <td class="py-1 align-middle"><span
+                                            class="badge text-danger px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i
+                                            class="fa fa-circle fs-9px fa-fw me-5px"></i> Broken</span></td>
+                                            {% elif instance.status == 'Stored' %}
+                                                <td class="py-1 align-middle"><span
+                                            class="badge text-yellow px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i
+                                            class="fa fa-circle fs-9px fa-fw me-5px"></i> Stored</span></td>
+                                            {% elif instance.status == 'Sold' %}
+                                                <td class="py-1 align-middle"><span
+                                            class="badge text-indigo px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i
+                                            class="fa fa-circle fs-9px fa-fw me-5px"></i> Sold</span></td>
+                                            {% elif instance.status == 'Decommis' %}
+                                                <td class="py-1 align-middle"><span
+                                            class="badge text-secondary px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i
+                                            class="fa fa-circle fs-9px fa-fw me-5px"></i> Decommis</span></td>
+                                                </td>
+                                            {% endif %}
 
                                                 <td class="align-middle">{{ instance.username }}</td>
                                                 <td class="align-middle">{{ instance.type_name }}</td>
@@ -337,31 +340,32 @@
                                                         href="{% url "inventory_details" pk=instance.pk %}">{{ forloop.counter }}</a>
                                                 </td>
 
-                                                {% if instance.status == 'Free' %}
-                                                    <td class="py-1 align-middle"><span
-                                                            class="badge bg-success align-items-center"> Free</span>
-                                                    </td>
-                                                {% elif instance.status == 'Used' %}
-                                                    <td class="py-1 align-middle"><span
-                                                            class="badge bg-primary align-items-center"> Used</span>
-                                                    </td>
-                                                {% elif instance.status == 'Broken' %}
-                                                    <td class="py-1 align-middle"><span
-                                                            class="badge bg-danger align-items-center"> Broken</span>
-                                                    </td>
-                                                {% elif instance.status == 'Stored' %}
-                                                    <td class="py-1 align-middle"><span
-                                                            class="badge bg-warning align-items-center"> Stored</span>
-                                                    </td>
-                                                {% elif instance.status == 'Sold' %}
-                                                    <td class="py-1 align-middle"><span
-                                                            class="badge bg-secondary align-items-center"> Sold</span>
-                                                    </td>
-                                                {% elif instance.status == 'Decommis' %}
-                                                    <td class="py-1 align-middle"><span
-                                                            class="badge bg-dark align-items-center"> Decommis</span>
-                                                    </td>
-                                                {% endif %}
+                                             {% if instance.status == 'Free' %}
+                                                <td class="py-1 align-middle"><span
+                                            class="badge text-green px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i
+                                            class="fa fa-circle fs-9px fa-fw me-5px"></i> Free</span></td>
+                                            {% elif instance.status == 'Used' %}
+                                                <td class="py-1 align-middle"><span
+                                            class="badge text-primary px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i
+                                            class="fa fa-circle fs-9px fa-fw me-5px"></i> Used</span></td>
+                                            {% elif instance.status == 'Broken' %}
+                                                <td class="py-1 align-middle"><span
+                                            class="badge text-danger px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i
+                                            class="fa fa-circle fs-9px fa-fw me-5px"></i> Broken</span></td>
+                                            {% elif instance.status == 'Stored' %}
+                                                <td class="py-1 align-middle"><span
+                                            class="badge text-yellow px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i
+                                            class="fa fa-circle fs-9px fa-fw me-5px"></i> Stored</span></td>
+                                            {% elif instance.status == 'Sold' %}
+                                                <td class="py-1 align-middle"><span
+                                            class="badge text-indigo px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i
+                                            class="fa fa-circle fs-9px fa-fw me-5px"></i> Sold</span></td>
+                                            {% elif instance.status == 'Decommis' %}
+                                                <td class="py-1 align-middle"><span
+                                            class="badge text-secondary px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i
+                                            class="fa fa-circle fs-9px fa-fw me-5px"></i> Decommis</span></td>
+                                                </td>
+                                            {% endif %}
 
                                                 <td class="align-middle">{{ instance.username }}</td>
                                                 <td class="align-middle">{{ instance.type_name }}</td>
@@ -421,31 +425,32 @@
                                                         href="{% url "inventory_details" pk=instance.pk %}">{{ forloop.counter }}</a>
                                                 </td>
 
-                                                {% if instance.status == 'Free' %}
-                                                    <td class="py-1 align-middle"><span
-                                                            class="badge bg-success align-items-center"> Free</span>
-                                                    </td>
-                                                {% elif instance.status == 'Used' %}
-                                                    <td class="py-1 align-middle"><span
-                                                            class="badge bg-primary align-items-center"> Used</span>
-                                                    </td>
-                                                {% elif instance.status == 'Broken' %}
-                                                    <td class="py-1 align-middle"><span
-                                                            class="badge bg-danger align-items-center"> Broken</span>
-                                                    </td>
-                                                {% elif instance.status == 'Stored' %}
-                                                    <td class="py-1 align-middle"><span
-                                                            class="badge bg-warning align-items-center"> Stored</span>
-                                                    </td>
-                                                {% elif instance.status == 'Sold' %}
-                                                    <td class="py-1 align-middle"><span
-                                                            class="badge bg-secondary align-items-center"> Sold</span>
-                                                    </td>
-                                                {% elif instance.status == 'Decommis' %}
-                                                    <td class="py-1 align-middle"><span
-                                                            class="badge bg-dark align-items-center"> Decommis</span>
-                                                    </td>
-                                                {% endif %}
+                                             {% if instance.status == 'Free' %}
+                                                <td class="py-1 align-middle"><span
+                                            class="badge text-green px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i
+                                            class="fa fa-circle fs-9px fa-fw me-5px"></i> Free</span></td>
+                                            {% elif instance.status == 'Used' %}
+                                                <td class="py-1 align-middle"><span
+                                            class="badge text-primary px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i
+                                            class="fa fa-circle fs-9px fa-fw me-5px"></i> Used</span></td>
+                                            {% elif instance.status == 'Broken' %}
+                                                <td class="py-1 align-middle"><span
+                                            class="badge text-danger px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i
+                                            class="fa fa-circle fs-9px fa-fw me-5px"></i> Broken</span></td>
+                                            {% elif instance.status == 'Stored' %}
+                                                <td class="py-1 align-middle"><span
+                                            class="badge text-yellow px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i
+                                            class="fa fa-circle fs-9px fa-fw me-5px"></i> Stored</span></td>
+                                            {% elif instance.status == 'Sold' %}
+                                                <td class="py-1 align-middle"><span
+                                            class="badge text-indigo px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i
+                                            class="fa fa-circle fs-9px fa-fw me-5px"></i> Sold</span></td>
+                                            {% elif instance.status == 'Decommis' %}
+                                                <td class="py-1 align-middle"><span
+                                            class="badge text-secondary px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i
+                                            class="fa fa-circle fs-9px fa-fw me-5px"></i> Decommis</span></td>
+                                                </td>
+                                            {% endif %}
 
                                                 <td class="align-middle">{{ instance.username }}</td>
                                                 <td class="align-middle">{{ instance.type_name }}</td>
@@ -505,31 +510,32 @@
                                                         href="{% url "inventory_details" pk=instance.pk %}">{{ forloop.counter }}</a>
                                                 </td>
 
-                                                {% if instance.status == 'Free' %}
-                                                    <td class="py-1 align-middle"><span
-                                                            class="badge bg-success align-items-center"> Free</span>
-                                                    </td>
-                                                {% elif instance.status == 'Used' %}
-                                                    <td class="py-1 align-middle"><span
-                                                            class="badge bg-primary align-items-center"> Used</span>
-                                                    </td>
-                                                {% elif instance.status == 'Broken' %}
-                                                    <td class="py-1 align-middle"><span
-                                                            class="badge bg-danger align-items-center"> Broken</span>
-                                                    </td>
-                                                {% elif instance.status == 'Stored' %}
-                                                    <td class="py-1 align-middle"><span
-                                                            class="badge bg-warning align-items-center"> Stored</span>
-                                                    </td>
-                                                {% elif instance.status == 'Sold' %}
-                                                    <td class="py-1 align-middle"><span
-                                                            class="badge bg-secondary align-items-center"> Sold</span>
-                                                    </td>
-                                                {% elif instance.status == 'Decommis' %}
-                                                    <td class="py-1 align-middle"><span
-                                                            class="badge bg-dark align-items-center"> Decommis</span>
-                                                    </td>
-                                                {% endif %}
+                                             {% if instance.status == 'Free' %}
+                                                <td class="py-1 align-middle"><span
+                                            class="badge text-green px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i
+                                            class="fa fa-circle fs-9px fa-fw me-5px"></i> Free</span></td>
+                                            {% elif instance.status == 'Used' %}
+                                                <td class="py-1 align-middle"><span
+                                            class="badge text-primary px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i
+                                            class="fa fa-circle fs-9px fa-fw me-5px"></i> Used</span></td>
+                                            {% elif instance.status == 'Broken' %}
+                                                <td class="py-1 align-middle"><span
+                                            class="badge text-danger px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i
+                                            class="fa fa-circle fs-9px fa-fw me-5px"></i> Broken</span></td>
+                                            {% elif instance.status == 'Stored' %}
+                                                <td class="py-1 align-middle"><span
+                                            class="badge text-yellow px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i
+                                            class="fa fa-circle fs-9px fa-fw me-5px"></i> Stored</span></td>
+                                            {% elif instance.status == 'Sold' %}
+                                                <td class="py-1 align-middle"><span
+                                            class="badge text-indigo px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i
+                                            class="fa fa-circle fs-9px fa-fw me-5px"></i> Sold</span></td>
+                                            {% elif instance.status == 'Decommis' %}
+                                                <td class="py-1 align-middle"><span
+                                            class="badge text-secondary px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i
+                                            class="fa fa-circle fs-9px fa-fw me-5px"></i> Decommis</span></td>
+                                                </td>
+                                            {% endif %}
 
                                                 <td class="align-middle">{{ instance.username }}</td>
                                                 <td class="align-middle">{{ instance.type_name }}</td>
@@ -589,31 +595,32 @@
                                                         href="{% url "inventory_details" pk=instance.pk %}">{{ forloop.counter }}</a>
                                                 </td>
 
-                                                {% if instance.status == 'Free' %}
-                                                    <td class="py-1 align-middle"><span
-                                                            class="badge bg-success align-items-center"> Free</span>
-                                                    </td>
-                                                {% elif instance.status == 'Used' %}
-                                                    <td class="py-1 align-middle"><span
-                                                            class="badge bg-primary align-items-center"> Used</span>
-                                                    </td>
-                                                {% elif instance.status == 'Broken' %}
-                                                    <td class="py-1 align-middle"><span
-                                                            class="badge bg-danger align-items-center"> Broken</span>
-                                                    </td>
-                                                {% elif instance.status == 'Stored' %}
-                                                    <td class="py-1 align-middle"><span
-                                                            class="badge bg-warning align-items-center"> Stored</span>
-                                                    </td>
-                                                {% elif instance.status == 'Sold' %}
-                                                    <td class="py-1 align-middle"><span
-                                                            class="badge bg-secondary align-items-center"> Sold</span>
-                                                    </td>
-                                                {% elif instance.status == 'Decommis' %}
-                                                    <td class="py-1 align-middle"><span
-                                                            class="badge bg-dark align-items-center"> Decommis</span>
-                                                    </td>
-                                                {% endif %}
+                                             {% if instance.status == 'Free' %}
+                                                <td class="py-1 align-middle"><span
+                                            class="badge text-green px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i
+                                            class="fa fa-circle fs-9px fa-fw me-5px"></i> Free</span></td>
+                                            {% elif instance.status == 'Used' %}
+                                                <td class="py-1 align-middle"><span
+                                            class="badge text-primary px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i
+                                            class="fa fa-circle fs-9px fa-fw me-5px"></i> Used</span></td>
+                                            {% elif instance.status == 'Broken' %}
+                                                <td class="py-1 align-middle"><span
+                                            class="badge text-danger px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i
+                                            class="fa fa-circle fs-9px fa-fw me-5px"></i> Broken</span></td>
+                                            {% elif instance.status == 'Stored' %}
+                                                <td class="py-1 align-middle"><span
+                                            class="badge text-yellow px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i
+                                            class="fa fa-circle fs-9px fa-fw me-5px"></i> Stored</span></td>
+                                            {% elif instance.status == 'Sold' %}
+                                                <td class="py-1 align-middle"><span
+                                            class="badge text-indigo px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i
+                                            class="fa fa-circle fs-9px fa-fw me-5px"></i> Sold</span></td>
+                                            {% elif instance.status == 'Decommis' %}
+                                                <td class="py-1 align-middle"><span
+                                            class="badge text-secondary px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i
+                                            class="fa fa-circle fs-9px fa-fw me-5px"></i> Decommis</span></td>
+                                                </td>
+                                            {% endif %}
 
                                                 <td class="align-middle">{{ instance.username }}</td>
                                                 <td class="align-middle">{{ instance.type_name }}</td>
